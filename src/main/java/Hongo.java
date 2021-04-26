@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Hongo {
     private String nombre;
     private String geolocalizacion;
@@ -30,5 +32,18 @@ public class Hongo {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hongo hongo = (Hongo) o;
+        return Objects.equals(nombre, hongo.nombre) && Objects.equals(geolocalizacion, hongo.geolocalizacion) && Objects.equals(image, hongo.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, geolocalizacion, image);
     }
 }

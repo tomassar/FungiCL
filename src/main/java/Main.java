@@ -28,7 +28,7 @@ public class Main {
 
     public static void mostrarMenu() {
         System.out.println("[1] Mostrar todos los hongos");
-        System.out.println("[2] Ingrese nombre de hongo a buscar");
+        System.out.println("[2] Mostrar hongo por nombre");
         System.out.println("[3] Agregar hongo a la base de datos");
         System.out.println("[0] Salir");
     }
@@ -65,7 +65,7 @@ public class Main {
         validarExistenciaHongo(nombreHongo);
     }
 
-    public static void leerArchivo(String ruta) {
+    public static ArrayList<String> leerArchivo(String ruta) {
         ArrayList<String> lineas = new ArrayList<>();
         String cadena;
         FileReader f = null;
@@ -87,14 +87,16 @@ public class Main {
             }
         }
         crearHashMapHongos(lineas);
+        return lineas;
     }
 
-    public static void insertarLinea(String linea){
+    public static void escribirHongoEnBaseDeDatos(String linea){
         FileWriter fw = null;
         BufferedWriter bw = null;
 
         try {
             File archivo = new File(ruta);
+            // Si el archivo no existe, se crea
             fw = new FileWriter(archivo.getAbsoluteFile(), true);
             bw = new BufferedWriter(fw);
             bw.write("\n"+linea);
@@ -164,6 +166,7 @@ public class Main {
     public static boolean existeHongo(String nombreHongo){
         return hashMapHongos.containsKey(nombreHongo);
     }
+
     public static void mostrarHongos() {
         for (Map.Entry<String, Hongo> entry : hashMapHongos.entrySet()) {
             String nombre = entry.getKey();
@@ -175,7 +178,7 @@ public class Main {
     public static void agregarHongo(String nombreHongo){
         String[] caracteristicas = preguntarCaracteristicasHongo(nombreHongo);
         String linea = caracteristicas[0]+";"+caracteristicas[1];
-        insertarLinea(linea);
+        escribirHongoEnBaseDeDatos(linea);
         iniciar();
     }
 
