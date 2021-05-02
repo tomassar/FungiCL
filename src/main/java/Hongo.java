@@ -2,6 +2,7 @@ import java.util.Objects;
 
 public class Hongo {
     private String nombre;
+    private String nombreCientifico;
     private String geolocalizacion;
     private String image;
 
@@ -17,6 +18,15 @@ public class Hongo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String getNombreCientifico() {
+        return nombreCientifico;
+    }
+
+    public void setNombreCientifico(String nombreCientifico) {
+        this.nombreCientifico = nombreCientifico;
+    }
+
 
     public String getGeolocalizacion() {
         return geolocalizacion;

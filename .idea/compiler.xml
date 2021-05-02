@@ -9,5 +9,8 @@
         <module name="FungiCL" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FungiCL" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
