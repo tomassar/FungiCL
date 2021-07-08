@@ -1,3 +1,4 @@
+import GUI.AgregarHong;
 import GUI.IniciarSesion;
 import GUI.Menu;
 
@@ -14,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
         IniciarSesion ventana = new IniciarSesion();
         Menu ventanaMenu = new Menu();
+        AgregarHong ventanHongo = new AgregarHong();
     }
 
     public static void iniciar() {

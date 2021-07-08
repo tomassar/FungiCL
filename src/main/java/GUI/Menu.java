@@ -75,7 +75,7 @@ public class Menu extends JFrame implements ActionListener {
         final com.intellij.uiDesigner.core.Spacer spacer4 = new com.intellij.uiDesigner.core.Spacer();
         inputPanel.add(spacer4, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer5 = new com.intellij.uiDesigner.core.Spacer();
-        inputPanel.add(spacer5, new com.intellij.uiDesigner.core.GridConstraints(10, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        inputPanel.add(spacer5, new com.intellij.uiDesigner.core.GridConstraints(10, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 26, false));
         final com.intellij.uiDesigner.core.Spacer spacer6 = new com.intellij.uiDesigner.core.Spacer();
         inputPanel.add(spacer6, new com.intellij.uiDesigner.core.GridConstraints(10, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer7 = new com.intellij.uiDesigner.core.Spacer();
@@ -84,12 +84,16 @@ public class Menu extends JFrame implements ActionListener {
         agregarHongosButton.setAlignmentX(0.1f);
         agregarHongosButton.setAlignmentY(1.0f);
         agregarHongosButton.setAutoscrolls(false);
+        agregarHongosButton.setBackground(new Color(-394241));
+        agregarHongosButton.setFocusable(false);
         agregarHongosButton.setRequestFocusEnabled(false);
         agregarHongosButton.setText("Agregar Hongos");
         inputPanel.add(agregarHongosButton, new com.intellij.uiDesigner.core.GridConstraints(3, 2, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         buscarHongosButton = new JButton();
         buscarHongosButton.setAlignmentX(0.1f);
         buscarHongosButton.setAlignmentY(1.0f);
+        buscarHongosButton.setBackground(new Color(-394241));
+        buscarHongosButton.setFocusable(false);
         buscarHongosButton.setMargin(new Insets(5, 0, 0, 0));
         buscarHongosButton.setRequestFocusEnabled(false);
         buscarHongosButton.setText("Buscar Hongos");
@@ -107,7 +111,7 @@ public class Menu extends JFrame implements ActionListener {
         final com.intellij.uiDesigner.core.Spacer spacer13 = new com.intellij.uiDesigner.core.Spacer();
         inputPanel.add(spacer13, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         textoCabecera = new JLabel();
-        Font textoCabeceraFont = this.$$$getFont$$$("Droid Serif", -1, 28, textoCabecera.getFont());
+        Font textoCabeceraFont = this.$$$getFont$$$("Microsoft YaHei UI Light", Font.BOLD, 28, textoCabecera.getFont());
         if (textoCabeceraFont != null) textoCabecera.setFont(textoCabeceraFont);
         textoCabecera.setText("FungiAraucanía");
         inputPanel.add(textoCabecera, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

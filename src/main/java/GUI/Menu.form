@@ -65,7 +65,7 @@
           </vspacer>
           <hspacer id="17432">
             <constraints>
-              <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="26" use-parent-layout="false"/>
             </constraints>
           </hspacer>
           <hspacer id="37a14">
@@ -86,6 +86,8 @@
               <alignmentX value="0.1"/>
               <alignmentY value="1.0"/>
               <autoscrolls value="false"/>
+              <background color="-394241"/>
+              <focusable value="false"/>
               <requestFocusEnabled value="false"/>
               <text value="Agregar Hongos"/>
             </properties>
@@ -97,6 +99,8 @@
             <properties>
               <alignmentX value="0.1"/>
               <alignmentY value="1.0"/>
+              <background color="-394241"/>
+              <focusable value="false"/>
               <margin top="5" left="0" bottom="0" right="0"/>
               <requestFocusEnabled value="false"/>
               <text value="Buscar Hongos"/>
@@ -137,7 +141,7 @@
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Droid Serif" size="28"/>
+              <font name="Microsoft YaHei UI Light" size="28" style="1"/>
               <text value="FungiAraucanía"/>
             </properties>
           </component>
