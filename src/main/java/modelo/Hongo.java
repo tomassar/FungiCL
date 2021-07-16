@@ -10,6 +10,7 @@ public class Hongo {
     private String nombreCientifico;
     private String descripcion;
     private File foto;
+    private ArrayList<TipoHongo> categorias = new ArrayList<>();
     private static ArrayList<Hongo> listaHongos = new ArrayList<>();
 
     public void accederADatos(int opcion){
