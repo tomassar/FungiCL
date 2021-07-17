@@ -12,4 +12,8 @@ public class ComunicaHongoConDatos {
     public static ArrayList<Hongo> obtenerHongos(){
         return manejaDatosHongo.obtenerHongos ();
     }
+
+    public static void crearHongo(String nombre, String geolocalizacion, String descripcion, String categorias) {
+        manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR));
+    }
 }

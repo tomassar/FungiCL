@@ -11,9 +11,9 @@ public class Hongo {
     private String descripcion;
     private Date fechaDeCreacion;
     private EstadoHongo estado;
-    private ArrayList<TipoHongo> categorias = new ArrayList<>();
+    private String categorias;
 
-    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, ArrayList<TipoHongo> categorias, EstadoHongo estado, Date fechaDeCreacion) {
+    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, Date fechaDeCreacion) {
         this.id = id;
         this.nombre = nombre;
         this.geolocalizacion = geolocalizacion;
@@ -23,13 +23,22 @@ public class Hongo {
         this.estado = estado;
     }
 
-    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, ArrayList<TipoHongo> categorias, EstadoHongo estado) {
+    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado) {
         this.id = id;
         this.nombre = nombre;
         this.geolocalizacion = geolocalizacion;
         this.descripcion = descripcion;
         this.categorias = categorias;
         this.estado = estado;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis ());
+    }
+
+    public Hongo(String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado) {
+        this.nombre = nombre;
+        this.geolocalizacion = geolocalizacion;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.categorias = categorias;
         this.fechaDeCreacion = new Date (System.currentTimeMillis ());
     }
 
@@ -57,7 +66,7 @@ public class Hongo {
         return fechaDeCreacion;
     }
 
-    public ArrayList<TipoHongo> getCategorias() {
+    public String getCategorias() {
         return categorias;
     }
 }

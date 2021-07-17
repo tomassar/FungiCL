@@ -25,10 +25,14 @@ public class ManejaDatosHongo {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
         //PreparedStatement es para evitar SQL Injection.
         try {
-            String sql = "INSERT INTO `fungiaraucania`.`hongos` (`nombre`,`geolocalizacion`,`venenoso`,`medicinal`) VALUES(?, ?, ?, ?)";
+            String sql = "INSERT INTO `fungiaraucania`.`hongos` (`nombre`,`geolocalizacion`,`descripcion`,`fechadecreacion`, `categorias`, `estado`) VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setNString (1, hongo.getNombre());
             preparedStatement.setNString (2, hongo.getGeolocalizacion ());
+            preparedStatement.setNString (3, hongo.getDescripcion ());
+            preparedStatement.setDate (4, hongo.getFechaDeCreacion ());
+            preparedStatement.setNString (5, hongo.getCategorias ());
+            preparedStatement.setNString (6, hongo.getEstado ().name ());
             preparedStatement.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
@@ -46,12 +50,12 @@ public class ManejaDatosHongo {
                 String descripcion = resultSet.getString ("descripcion");
                 Date fechaDeSubida = resultSet.getDate ("fechadecreacion");
                 EstadoHongo estado = EstadoHongo.valueOf (resultSet.getString ("estado").toUpperCase());
-                String[] arrCategorias = resultSet.getString ("categorias").split(";");
-                ArrayList<TipoHongo> categorias = new ArrayList<> ();
-                for (String categoria:
-                        arrCategorias) {
-                    categorias.add(TipoHongo.valueOf(categoria.toUpperCase ()));
-                }
+                String categorias = resultSet.getString ("categorias");
+                //ArrayList<TipoHongo> categorias = new ArrayList<> ();
+                //for (String categoria:
+                //        arrCategorias) {
+                //    categorias.add(TipoHongo.valueOf(categoria.toUpperCase ()));
+                //}
                 hongos.add(new Hongo (id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida));
             }
         }catch(SQLException e){
