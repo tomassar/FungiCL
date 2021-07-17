@@ -1,5 +1,6 @@
-package GUI;
+package vista;
 
+import modelo.*;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
@@ -14,6 +15,8 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JTextField textoUsuario;
     private JTextField textoContraseña;
     private JButton iniciarSesiónButton;
+    private JLabel errorLabel;
+    static Usuario usuario;
 
     public IniciarSesion() {
 
@@ -28,7 +31,26 @@ public class IniciarSesion extends JFrame implements ActionListener {
         setDefaultCloseOperation (EXIT_ON_CLOSE);
         setVisible (true);
 
+        IniciarSesion parent = this;
 
+
+        iniciarSesiónButton.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String contrasenaTexto = textoContraseña.getText ();
+                String nombreDeUsuarioText = textoUsuario.getText ();
+
+                usuario = ComunicaUsuarioConDatos.inicarSesion (nombreDeUsuarioText, contrasenaTexto);
+                if (usuario == null) {
+                    errorLabel.setText ("Nombre de usuario o contraseña incorrecta.");
+                } else {
+                    Menu menu = new Menu (parent, true);
+                    menu.setVisible (true);
+                    errorLabel.setText ("");
+                }
+
+            }
+        });
     }
 
     @Override
@@ -78,6 +100,12 @@ public class IniciarSesion extends JFrame implements ActionListener {
         final JPanel panel2 = new JPanel ();
         panel2.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (1, 1, new Insets (0, 0, 0, 0), -1, -1));
         mainContainer.add (panel2, new com.intellij.uiDesigner.core.GridConstraints (4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        errorLabel = new JLabel ();
+        errorLabel.setBackground (new Color (-4519424));
+        errorLabel.setEnabled (true);
+        errorLabel.setForeground (new Color (-4521977));
+        errorLabel.setText ("");
+        panel2.add (errorLabel, new com.intellij.uiDesigner.core.GridConstraints (0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         iniciarSesiónButton = new JButton ();
         iniciarSesiónButton.setBackground (new Color (-1));
         iniciarSesiónButton.setFocusable (false);

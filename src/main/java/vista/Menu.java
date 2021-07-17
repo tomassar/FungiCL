@@ -1,4 +1,4 @@
-package GUI;
+package vista;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -6,31 +6,44 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Locale;
 
-public class Menu extends JFrame implements ActionListener {
+public class Menu extends JDialog  {
     private JPanel mainContainer;
     private JPanel inputPanel;
     private JButton agregarHongosButton;
     private JButton buscarHongosButton;
     private JLabel textoCabecera;
 
-    public Menu() {
+    public Menu(IniciarSesion parent, boolean modal) {
         // Tamaño de la ventana
+        super (parent, modal);
         this.setMinimumSize (new Dimension (500, 500));
         this.setPreferredSize (new Dimension (500, 500));
         this.setMaximumSize (new Dimension (500, 500));
-
+        parent.setVisible (false);
         setTitle ("Menú");
         setLocationRelativeTo (null); // Se abre por default a la mitad de la pantalla.
-        this.add (mainContainer);
-        setDefaultCloseOperation (EXIT_ON_CLOSE);
-        setVisible (true);
-    }
+        this.setContentPane (mainContainer);
+        this.pack ();
+        setDefaultCloseOperation (HIDE_ON_CLOSE);
+        Menu menu = this;
+        this.addWindowListener (new WindowAdapter () {
+            public void windowClosing(WindowEvent e) {
+                parent.setVisible (true);
+            }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+        });
+        buscarHongosButton.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println ("button");
+                BuscarHongos buscarHongos = new BuscarHongos (menu, true);
+                buscarHongos.setVisible (true);
+            }
+        });
     }
 
     {

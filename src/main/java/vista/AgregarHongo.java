@@ -1,4 +1,4 @@
-package GUI;
+package vista;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -6,8 +6,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
-public class AgregarHong extends JFrame {
-    public AgregarHong() {
+public class AgregarHongo extends JFrame {
+    public AgregarHongo() {
         this.setMinimumSize (new Dimension (500, 500));
         this.setPreferredSize (new Dimension (500, 500));
         this.setMaximumSize (new Dimension (500, 500));

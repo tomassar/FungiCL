@@ -1,10 +1,10 @@
 package lanzador;
 
-import vista.AgregaHongo;
-
+import vista.*;
 public class App {
 
     public static void main(String[] args) {
-        new AgregaHongo();
+        IniciarSesion iniciarSesion = new IniciarSesion ();
+        iniciarSesion.setVisible (true);
     }
 }
