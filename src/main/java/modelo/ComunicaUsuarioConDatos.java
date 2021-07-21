@@ -20,21 +20,21 @@ public class ComunicaUsuarioConDatos {
         for (String dato:
              datos) {
             if(ValidaDatosUsuario.esVacio (dato)){
-                return "Por favor, llene los campos faltantes";
+                return "<html><p style='color:red'>Por favor, llene los campos faltantes</p></html>";
             }
 
             if(!ValidaDatosUsuario.clavesCoinciden (datos[1],datos[3])){
-                return "Las contraseñas no coinciden";
+                return "<html><p style='color:red'>Las contraseñas no coinciden</p></html>";
             }
 
             if(!ValidaDatosUsuario.esEmail(datos[2])){
-                return "El email no parece ser correcto";
+                return "<html><p style='color:red'>El email no parece ser correcto</p></html>";
             }
         }
         if(manejoDatosUsuario.crear (usuario)){
-            return "Usuario creado con éxito";
+            return "<html><p style='color:blue'>Usuario creado con éxito</p></html>";
         }else{
-            return "Nombre de usuario o correo ya existente";
+            return "<html><p style='color:red'>Nombre de usuario o correo ya existente</p></html>";
         }
     }
 }

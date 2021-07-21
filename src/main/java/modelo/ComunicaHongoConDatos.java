@@ -16,4 +16,8 @@ public class ComunicaHongoConDatos {
     public static void crearHongo(String nombre, String geolocalizacion, String descripcion, String categorias) {
         manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR));
     }
+
+    public static ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {
+        return manejaDatosHongo.buscarHongosQueContengan(busqueda);
+    }
 }

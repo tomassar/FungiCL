@@ -63,4 +63,32 @@ public class ManejaDatosHongo {
         }
         return hongos;
     }
+
+    public ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {
+        ArrayList<Hongo> hongos = new ArrayList<> ();
+        try {
+            String sql = "SELECT * FROM hongos WHERE nombre LIKE ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setNString (1, "%"+busqueda+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) { //Si es que hay hongos entonces retorna true
+                int id = resultSet.getInt ("id");
+                String nombre = resultSet.getString ("nombre");
+                String geolocalizacion = resultSet.getString ("geolocalizacion");
+                String descripcion = resultSet.getString ("descripcion");
+                Date fechaDeSubida = resultSet.getDate ("fechadecreacion");
+                EstadoHongo estado = EstadoHongo.valueOf (resultSet.getString ("estado").toUpperCase());
+                String categorias = resultSet.getString ("categorias");
+                //ArrayList<TipoHongo> categorias = new ArrayList<> ();
+                //for (String categoria:
+                //        arrCategorias) {
+                //    categorias.add(TipoHongo.valueOf(categoria.toUpperCase ()));
+                //}
+                hongos.add(new Hongo (id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida));
+            }
+        }catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return hongos;
+    }
 }
