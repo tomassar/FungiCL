@@ -17,7 +17,15 @@ public class Usuario {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.correo = correo;
-        this.fechaDeCreacion = new Date (System.currentTimeMillis());;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis());
+    }
+
+    public Usuario(String nombre, String contrasena, String correo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.correo = correo;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis());
     }
 
     public Usuario(int id, String nombre, String contrasena, String correo, Date fechaDeCreacion) {

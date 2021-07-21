@@ -21,19 +21,21 @@ public class ManejaDatosUsuario{
     }
 
     //Método que escribe un nuevo usuario en la base de datos
-    public void crear(Usuario usuario) {
+    public boolean crear(Usuario usuario) {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
         try {
-            String sql = "INSERT INTO `fungiaraucania`.`usuarios` (`nombredeusuario`,`email`,`contrasena`, `fechadecreacion`) VALUES(?, ?, ?, ?);";
+            String sql = "INSERT INTO `fungiaraucania`.`usuarios` (`nombredeusuario`,`correo`,`contrasena`, `fechadecreacion`) VALUES(?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setNString (1, usuario.getNombre ());
             preparedStatement.setNString (2, usuario.getCorreo ());
             preparedStatement.setNString (3, usuario.getClave ());
             preparedStatement.setDate (4, usuario.getFechaDeCreacion ());
             preparedStatement.executeUpdate();
+            return true;
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return false;
     }
 
     public ArrayList<Usuario> obtenerUsuarios() {
