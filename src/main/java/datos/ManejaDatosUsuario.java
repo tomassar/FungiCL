@@ -24,13 +24,12 @@ public class ManejaDatosUsuario{
     public void crear(Usuario usuario) {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
         try {
-            String sql = "INSERT INTO `fungiaraucania`.`usuarios` (`nombredeusuario`,`email`,`contrasena`,`categoria`, `fechadecreacion`) VALUES(?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO `fungiaraucania`.`usuarios` (`nombredeusuario`,`email`,`contrasena`, `fechadecreacion`) VALUES(?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setNString (1, usuario.getNombre ());
             preparedStatement.setNString (2, usuario.getCorreo ());
             preparedStatement.setNString (3, usuario.getClave ());
-            preparedStatement.setNString (4, usuario.getCategoria ().name());
-            preparedStatement.setDate (5, usuario.getFechaDeCreacion ());
+            preparedStatement.setDate (4, usuario.getFechaDeCreacion ());
             preparedStatement.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
@@ -47,19 +46,9 @@ public class ManejaDatosUsuario{
                 String nombre = resultSet.getString ("nombredeusuario");
                 String correo = resultSet.getString ("correo");
                 String contrasena = resultSet.getString ("contrasena");
-                String categoria = resultSet.getString ("categoria");
                 Date fechaDeCreacion = resultSet.getDate ("fechadecreacion");
 
-                switch (categoria){
-                    case "admin":
-                        usuarios.add(new Usuario(id, nombre, correo, contrasena, TipoUsuario.ADMIN,fechaDeCreacion));
-                        break;
-                    case "cliente":
-                        usuarios.add(new Usuario(id, nombre, correo, contrasena, TipoUsuario.CLIENTE,fechaDeCreacion));
-                        break;
-                    default:
-                        System.err.println ("No existe tal categoria en nuestro modelo");
-                }
+                usuarios.add(new Usuario(id, nombre, correo, contrasena,fechaDeCreacion));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -78,14 +67,9 @@ public class ManejaDatosUsuario{
                 String nombreDeUsuario = resultSet.getString ("nombredeusuario");
                 String correo = resultSet.getString ("correo");
                 String contrasena = resultSet.getString ("contrasena");
-                String categoria = resultSet.getString("categoria");
                 Date fechaDeCreacion = resultSet.getDate ("fechadecreacion");
 
-                if (categoria.equals ("admin")){
-                        return new Usuario (id, nombreDeUsuario, contrasena, correo, TipoUsuario.ADMIN, fechaDeCreacion);
-                }else{
-                    return new Usuario (id, nombreDeUsuario, contrasena, correo, TipoUsuario.CLIENTE, fechaDeCreacion);
-                }
+                return new Usuario (id, nombreDeUsuario, contrasena, correo, fechaDeCreacion);
             }
             else{
                 System.out.println ("El usuario con el id "+id+" no se encuentra en nuestra base de datos.");
@@ -134,14 +118,9 @@ public class ManejaDatosUsuario{
             if(resultSet.next ()){
                 String correo = resultSet.getString ("correo");
                 String nombreDeUsuario = resultSet.getString ("nombredeusuario");
-                String categoria = resultSet.getString ("categoria");
                 int id = Integer.parseInt (resultSet.getString ("id"));
 
-                if (categoria.equals ("admin")){
-                    return new Usuario (id, nombreDeUsuario, contrasena, correoONombreDeUsuario, TipoUsuario.ADMIN);
-                }else{
-                    return new Usuario (id, nombreDeUsuario, contrasena, correoONombreDeUsuario, TipoUsuario.CLIENTE);
-                }
+                return new Usuario (id, nombreDeUsuario, contrasena, correoONombreDeUsuario);
             }
             else{
                 System.out.println ("El usuario no se encuentra en nuestra base de datos");

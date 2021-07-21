@@ -1,14 +1,10 @@
 package vista;
 
-import datos.ManejaDatosHongo;
 import modelo.ComunicaHongoConDatos;
 import modelo.Hongo;
-import modelo.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -18,7 +14,7 @@ public class ListaHongos extends JDialog {
     private JList listaHongos;
     String[] data = {"one", "two", "three", "four"};
 
-    public ListaHongos(BuscarHongos parent, boolean modal) {
+    public ListaHongos(BuscaHongo parent, boolean modal) {
         // Tamaño de la ventana
         super (parent, modal);
         $$$setupUI$$$ ();

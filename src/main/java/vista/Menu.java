@@ -39,8 +39,8 @@ public class Menu extends JDialog  {
         buscarHongosButton.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BuscarHongos buscarHongos = new BuscarHongos (menu, true);
-                buscarHongos.setVisible (true);
+                BuscaHongo buscaHongos = new BuscaHongo (menu, true);
+                buscaHongos.setVisible (true);
             }
         });
         agregarHongosButton.addActionListener (new ActionListener () {

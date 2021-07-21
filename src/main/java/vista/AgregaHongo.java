@@ -8,6 +8,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Locale;
 
 public class AgregaHongo extends JDialog {
@@ -30,6 +32,12 @@ public class AgregaHongo extends JDialog {
         this.pack ();
         setDefaultCloseOperation (HIDE_ON_CLOSE);
         AgregaHongo thisClass = this;
+        this.addWindowListener (new WindowAdapter () {
+            public void windowClosing(WindowEvent e) {
+                parent.setVisible (true);
+            }
+
+        });
         agregarButton.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
