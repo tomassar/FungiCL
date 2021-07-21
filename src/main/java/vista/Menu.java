@@ -28,11 +28,11 @@ public class Menu extends JDialog  {
         setLocationRelativeTo (null); // Se abre por default a la mitad de la pantalla.
         this.setContentPane (mainContainer);
         this.pack ();
-        setDefaultCloseOperation (HIDE_ON_CLOSE);
         Menu menu = this;
         this.addWindowListener (new WindowAdapter () {
             public void windowClosing(WindowEvent e) {
                 parent.setVisible (true);
+                menu.setVisible (false);
             }
 
         });

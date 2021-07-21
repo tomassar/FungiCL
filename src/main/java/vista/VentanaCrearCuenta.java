@@ -27,6 +27,7 @@ JFrame parent;
 
 public VentanaCrearCuenta(JFrame parent, boolean modal) {
     super (parent, modal);
+    setTitle ("Crear cuenta");
     this.thisObject = this;
     this.setSize (800, 600);
     this.setLocationRelativeTo (null);
