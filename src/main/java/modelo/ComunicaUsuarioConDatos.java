@@ -12,7 +12,7 @@ public class ComunicaUsuarioConDatos {
     }
 
     public static ArrayList<Usuario> obtenerUsuarios(){
-        return manejoDatosUsuario.obtenerUsuarios ();
+        return manejoDatosUsuario.handleObtenerUsuario();
     }
 
     public static String crearCuenta(String[] datos){
@@ -31,7 +31,7 @@ public class ComunicaUsuarioConDatos {
                 return "<html><p style='color:red'>El email no parece ser correcto</p></html>";
             }
         }
-        if(manejoDatosUsuario.crear (usuario)){
+        if(manejoDatosUsuario.handleCrear (usuario)){
             return "<html><p style='color:blue'>Usuario creado con éxito</p></html>";
         }else{
             return "<html><p style='color:red'>Nombre de usuario o correo ya existente</p></html>";

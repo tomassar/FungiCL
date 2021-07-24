@@ -10,6 +10,7 @@ public class ManejaDatosUsuario{
     Connection connection;
     //Representa un SQL statement (en lenguaje SQL)
     Statement statement;
+    ArrayList<Usuario> usuarios;
 
     public ManejaDatosUsuario(){
         try {
@@ -20,17 +21,21 @@ public class ManejaDatosUsuario{
         }
     }
 
+
     //Método que escribe un nuevo usuario en la base de datos
-    public boolean crear(Usuario usuario) {
+    public void crear(Usuario usuario ) throws SQLException {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
+        String sql = "INSERT INTO `fungiaraucania`.`usuarios` (`nombredeusuario`,`correo`,`contrasena`, `fechadecreacion`) VALUES(?, ?, ?, ?);";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setNString (1, usuario.getNombre ());
+        preparedStatement.setNString (2, usuario.getCorreo ());
+        preparedStatement.setNString (3, usuario.getClave ());
+        preparedStatement.setDate (4, usuario.getFechaDeCreacion ());
+        preparedStatement.executeUpdate();
+    }
+    public boolean handleCrear(Usuario usuario) {
         try {
-            String sql = "INSERT INTO `fungiaraucania`.`usuarios` (`nombredeusuario`,`correo`,`contrasena`, `fechadecreacion`) VALUES(?, ?, ?, ?);";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setNString (1, usuario.getNombre ());
-            preparedStatement.setNString (2, usuario.getCorreo ());
-            preparedStatement.setNString (3, usuario.getClave ());
-            preparedStatement.setDate (4, usuario.getFechaDeCreacion ());
-            preparedStatement.executeUpdate();
+            crear(usuario);
             return true;
         }catch(SQLException e){
             e.printStackTrace();
@@ -38,25 +43,28 @@ public class ManejaDatosUsuario{
         return false;
     }
 
-    public ArrayList<Usuario> obtenerUsuarios() {
-        ArrayList<Usuario> usuarios = new ArrayList<> ();
-        try {
-            //Los SQL Statement retornan objetos ResultSet. ResultSet es una tabla de datos representando los resultados de la base de datos
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM usuarios");
-            while(resultSet.next()) { // .next retorna un booleano que es true si hay más datos que mostrar
-                int id = resultSet.getInt ("id");
-                String nombre = resultSet.getString ("nombredeusuario");
-                String correo = resultSet.getString ("correo");
-                String contrasena = resultSet.getString ("contrasena");
-                Date fechaDeCreacion = resultSet.getDate ("fechadecreacion");
+    public void obtenerUsuario() throws SQLException {
+        //Los SQL Statement retornan objetos ResultSet. ResultSet es una tabla de datos representando los resultados de la base de datos
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM usuarios");
+        while(resultSet.next()) { // .next retorna un booleano que es true si hay más datos que mostrar
+            int id = resultSet.getInt ("id");
+            String nombre = resultSet.getString ("nombredeusuario");
+            String correo = resultSet.getString ("correo");
+            String contrasena = resultSet.getString ("contrasena");
+            Date fechaDeCreacion = resultSet.getDate ("fechadecreacion");
 
-                usuarios.add(new Usuario(id, nombre, correo, contrasena,fechaDeCreacion));
-            }
+            usuarios.add(new Usuario(id, nombre, correo, contrasena,fechaDeCreacion));
+        }
+    }
+    public ArrayList<Usuario> handleObtenerUsuario() {
+        try {
+            obtenerUsuario();
         }catch(SQLException e){
             e.printStackTrace();
         }
         return usuarios;
     }
+
     //Retorna un objeto Usuario con los datos obtenidos de la base de datos usando el id del usuario
     public Usuario leer(int id) {
         try {
