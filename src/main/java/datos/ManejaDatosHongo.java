@@ -25,7 +25,7 @@ public class ManejaDatosHongo {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
         //PreparedStatement es para evitar SQL Injection.
         try {
-            String sql = "INSERT INTO `fungiaraucania`.`hongos` (`nombre`,`geolocalizacion`,`descripcion`,`fechadecreacion`, `categorias`, `estado`) VALUES(?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `fungiaraucania`.`hongos` (`nombre`,`geolocalizacion`,`descripcion`,`fechadecreacion`, `categorias`, `estado`, `imagen`) VALUES(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setNString (1, hongo.getNombre());
             preparedStatement.setNString (2, hongo.getGeolocalizacion ());
@@ -33,6 +33,14 @@ public class ManejaDatosHongo {
             preparedStatement.setDate (4, hongo.getFechaDeCreacion ());
             preparedStatement.setNString (5, hongo.getCategorias ());
             preparedStatement.setNString (6, hongo.getEstado ().name ());
+            byte[] bytesImagen = hongo.getImagen ();
+            if(bytesImagen == null){
+                //En caso de que sea null, se sube un null
+                preparedStatement.setNull (7, Types.BLOB);
+            }else {
+                Blob blob = new javax.sql.rowset.serial.SerialBlob (hongo.getImagen ()); // Creando el blob que almacena los bytes de la imágen
+                preparedStatement.setBlob (7, blob);
+            }
             preparedStatement.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
@@ -51,12 +59,18 @@ public class ManejaDatosHongo {
                 Date fechaDeSubida = resultSet.getDate ("fechadecreacion");
                 EstadoHongo estado = EstadoHongo.valueOf (resultSet.getString ("estado").toUpperCase());
                 String categorias = resultSet.getString ("categorias");
+                Blob blob = resultSet.getBlob ("imagen");
+                //convertir blob a un arreglo de bytes
+                int blobLength = (int) blob.length();
+                byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                //Liberar el blob para liberar memoria
+                blob.free();
                 //ArrayList<TipoHongo> categorias = new ArrayList<> ();
                 //for (String categoria:
                 //        arrCategorias) {
                 //    categorias.add(TipoHongo.valueOf(categoria.toUpperCase ()));
                 //}
-                hongos.add(new Hongo (id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida));
+                hongos.add(new Hongo (id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida, blobAsBytes));
             }
         }catch(SQLException e){
             System.err.println("Error: "+e.getMessage());

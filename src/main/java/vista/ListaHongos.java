@@ -89,7 +89,7 @@ public class ListaHongos {
                 // Loop through the file storage and see which file is the selected one.
                 for (Hongo hongo : ComunicaHongoConDatos.obtenerHongos ()) {
                     if (hongo.getId() == hongoId) {
-                        JFrame jfPreview = createFrame(hongo.getNombre (), hongo.getDescripcion (), hongo.getGeolocalizacion (), hongo.getCategorias (), "");
+                        JFrame jfPreview = createFrame(hongo.getNombre (), hongo.getDescripcion (), hongo.getGeolocalizacion (), hongo.getCategorias (), "ds",hongo.getImagen ());
                         jfPreview.setVisible(true);
                     }
                 }
@@ -118,7 +118,7 @@ public class ListaHongos {
     }
 
     //Se crea la ventana que sirve para visualizar la información del hongo seleccionado
-    public static JFrame createFrame(String fileName, String fileData, String geolocalizacion, String categorias, String fileExtension) {
+    public static JFrame createFrame(String fileName, String fileData, String geolocalizacion, String categorias, String fileExtension, byte[] imagen) {
 
         JFrame jFrame = new JFrame(fileName);
         jFrame.setSize(500, 500);
@@ -146,7 +146,7 @@ public class ListaHongos {
             jlFileContent.setText("<html><p style='width:270px'>" + new String(fileData) + "</p></html>");
             // Si el archivo es una imagen, se ve la imagen.
         } else {
-            jlFileContent.setIcon(new ImageIcon(fileData));
+            jlFileContent.setIcon(new ImageIcon(imagen));
         }
 
 

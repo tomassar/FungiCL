@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.Locale;
 
 public class AgregaHongo extends JDialog {
@@ -19,6 +20,8 @@ public class AgregaHongo extends JDialog {
     private JTextField textDesc;
     private JTextField textCategorias;
     private JButton agregarButton;
+    private JButton elegirImágenButton;
+    private File imagen; //imágen del hongo
 
     public AgregaHongo(Menu parent, boolean modal) {
         super (parent, modal);
@@ -45,7 +48,20 @@ public class AgregaHongo extends JDialog {
                 String geolocalizacion = textGeo.getText ();
                 String descripcion = textDesc.getText ();
                 String categorias = textCategorias.getText ();
-                ComunicaHongoConDatos.crearHongo (nombre, geolocalizacion, descripcion, categorias);
+                ComunicaHongoConDatos.crearHongoConImagen (nombre, geolocalizacion, descripcion, categorias, imagen);
+            }
+        });
+        elegirImágenButton.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Se crea la un JFileChooser para abrir el explorador de archivos
+                JFileChooser jFileChooser = new JFileChooser ();
+                jFileChooser.setDialogTitle ("Seleccione el archivo");
+                // Si se selecciona un archivo desde el JFileChooser se ejecuta la acción
+                if (jFileChooser.showOpenDialog (null) == JFileChooser.APPROVE_OPTION) {
+                    // Se obtiene el archivo seleccionado
+                    imagen = jFileChooser.getSelectedFile ();
+                }
             }
         });
     }
@@ -66,7 +82,7 @@ public class AgregaHongo extends JDialog {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel ();
-        panel1.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (3, 1, new Insets (10, 10, 10, 10), -1, -1));
+        panel1.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (4, 1, new Insets (10, 10, 10, 10), -1, -1));
         final JPanel panel2 = new JPanel ();
         panel2.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (4, 2, new Insets (0, 0, 0, 0), -1, -1));
         panel1.add (panel2, new com.intellij.uiDesigner.core.GridConstraints (1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -98,7 +114,10 @@ public class AgregaHongo extends JDialog {
         panel1.add (label5, new com.intellij.uiDesigner.core.GridConstraints (0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         agregarButton = new JButton ();
         agregarButton.setText ("Agregar");
-        panel1.add (agregarButton, new com.intellij.uiDesigner.core.GridConstraints (2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add (agregarButton, new com.intellij.uiDesigner.core.GridConstraints (3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        elegirImágenButton = new JButton ();
+        elegirImágenButton.setText ("Elegir Imágen");
+        panel1.add (elegirImágenButton, new com.intellij.uiDesigner.core.GridConstraints (2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

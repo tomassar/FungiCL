@@ -12,8 +12,9 @@ public class Hongo {
     private Date fechaDeCreacion;
     private EstadoHongo estado;
     private String categorias;
+    private byte[] imagen;
 
-    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, Date fechaDeCreacion) {
+    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, Date fechaDeCreacion, byte[] imagen) {
         this.id = id;
         this.nombre = nombre;
         this.geolocalizacion = geolocalizacion;
@@ -21,6 +22,39 @@ public class Hongo {
         this.fechaDeCreacion = fechaDeCreacion;
         this.categorias = categorias;
         this.estado = estado;
+        this.imagen = imagen;
+    }
+
+    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, byte[] imagen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.geolocalizacion = geolocalizacion;
+        this.descripcion = descripcion;
+        this.categorias = categorias;
+        this.estado = estado;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis ());
+        this.imagen = imagen;
+    }
+
+    public Hongo(String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, byte[] imagen) {
+        this.nombre = nombre;
+        this.geolocalizacion = geolocalizacion;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.categorias = categorias;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis ());
+        this.imagen = imagen;
+    }
+
+    //Constructores por defecto en caso de que no haya una imágen, se pone como null. Importante.
+    public Hongo(String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado) {
+        this.nombre = nombre;
+        this.geolocalizacion = geolocalizacion;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.categorias = categorias;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis ());
+        this.imagen = null;
     }
 
     public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado) {
@@ -31,15 +65,18 @@ public class Hongo {
         this.categorias = categorias;
         this.estado = estado;
         this.fechaDeCreacion = new Date (System.currentTimeMillis ());
+        this.imagen = null;
     }
 
-    public Hongo(String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado) {
+    public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, Date fechaDeCreacion) {
+        this.id = id;
         this.nombre = nombre;
         this.geolocalizacion = geolocalizacion;
         this.descripcion = descripcion;
-        this.estado = estado;
+        this.fechaDeCreacion = fechaDeCreacion;
         this.categorias = categorias;
-        this.fechaDeCreacion = new Date (System.currentTimeMillis ());
+        this.estado = estado;
+        this.imagen = null;
     }
 
     public int getId() {
@@ -68,5 +105,9 @@ public class Hongo {
 
     public String getCategorias() {
         return categorias;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
     }
 }
