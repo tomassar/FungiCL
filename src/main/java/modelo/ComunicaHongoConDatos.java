@@ -26,7 +26,7 @@ public class ComunicaHongoConDatos {
         byte[] fileBytes;
         try {
             //rediomensiona la imágen a un tamaño adecuado
-            fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath (), 0.5);
+            fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath ());
             //fileBytes = Utilidades.read (imagen);
         } catch (IOException e) {
             fileBytes = null;

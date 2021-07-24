@@ -19,12 +19,14 @@ public class Utilidades {
         }).start();
     }
 
-    public static byte[] redimensionar(String inputImagePath, double percent) throws IOException {
+    public static byte[] redimensionar(String inputImagePath) throws IOException {
         File inputFile = new File(inputImagePath);
         BufferedImage inputImage = ImageIO.read(inputFile);
-        int scaledWidth = (int) (inputImage.getWidth() * percent);
-        int scaledHeight = (int) (inputImage.getHeight() * percent);
-
+        int width = inputImage.getWidth();
+        int height = inputImage.getHeight();
+        double radio_original = (double) height/ (double)width;
+        int scaledWidth = 240;
+        int scaledHeight = (int)(radio_original* (double) scaledWidth); //Matemática para mantener el radio correcto de la imágen
         // Crea una imágen de salida
         BufferedImage outputImage = new BufferedImage(scaledWidth,
                 scaledHeight, inputImage.getType());
