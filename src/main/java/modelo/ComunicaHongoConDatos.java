@@ -5,6 +5,7 @@ import datos.ManejaDatosUsuario;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ComunicaHongoConDatos {
@@ -33,7 +34,11 @@ public class ComunicaHongoConDatos {
             e.printStackTrace ();
         }
         // Se pone el contenido del archivo en el array de bytes creado para que sea enviado.
-        manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR, fileBytes));
+        try {
+            manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR, fileBytes));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+        }
     }
 
     public static ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {
