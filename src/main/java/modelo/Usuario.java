@@ -1,68 +1,55 @@
 package modelo;
 
+import datos.ManejaDatosUsuario;
+
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class Usuario {
+    private int id;
+    private final String nombre;
+    private final String contrasena;
+    private final String correo;
+    private final Date fechaDeCreacion;
 
-    private String nombre;
-    private String clave;
-    private String correo;
-    private TipoUsuario categoria;
-    private static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
-    public void accederADatos(int opcion){
-
-        /*
-        ManejoDatosUsuario manejo = new ManejoDatosUsuario();
-
-        switch (opcion){
-
-            case 1:
-                ManejoDatosUsuario.abrir(usuario);
-                break;
-            case 2:
-                ManejoDatosUsuario.leer(usuario);
-                break;
-            case 3:
-                if(categoria == TipoUsuario.ADMIN){
-                    ManejoDatosUsuario.escribir(listaUsuarios);
-                }
-                break;
-            case 4:
-                if(categoria == TipoUsuario.ADMIN){
-                    ManejoDatosUsuario.borrar(usuario);
-                }
-                break;
-        }*/
+    public Usuario(int id, String nombre, String contrasena, String correo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.correo = correo;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis());
     }
 
-    public static ArrayList<Usuario> obtenerUsuarios(){
-        return listaUsuarios;
+    public Usuario(String nombre, String contrasena, String correo) {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.correo = correo;
+        this.fechaDeCreacion = new Date (System.currentTimeMillis());
     }
 
-    public static void cargarUsuarios(){
-        /*
-        ManejoDatosUsuario = new ManejoDatosUsuario();
-        ArrayList<String> datos = MaenjoDatosUsuario.leer();
-
-        for(int i = 0; i < datos.size();i = i + 5){
-            String nombre = datos.get(i);
-            String clave = datos.get(i+1);
-            String telefono = datos.get(i+2);
-            String correo = datos.get(i+3);
-            TipoUsuario categoria = TipoUsuario.valueOf(datos.get(i+4));
-            Usuario usuario = new Usuario(nombre, clave, telefono, correo, categoria);
-            listaUsuarios.add(usuario);
-        }
-        */
-        //leer datos y agregárselo a la lista.
-    }
-
-    public static boolean confirmarUsuario(Usuario usuario){
-        return listaUsuarios.contains(usuario);
+    public Usuario(int id, String nombre, String contrasena, String correo, Date fechaDeCreacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.correo = correo;
+        this.fechaDeCreacion = fechaDeCreacion;
     }
 
     public String getClave() {
-        return clave;
+        return contrasena;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public Date getFechaDeCreacion(){
+        return fechaDeCreacion;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCorreo() {
+        return correo;
     }
 }
