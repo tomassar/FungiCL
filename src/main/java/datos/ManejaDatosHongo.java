@@ -10,7 +10,6 @@ public class ManejaDatosHongo {
     Connection connection;
     //Representa un SQL statement (en lenguaje SQL)
     Statement statement;
-    ArrayList<Hongo> hongos1, hongos2;
 
     public ManejaDatosHongo() {
         try {
@@ -35,6 +34,7 @@ public class ManejaDatosHongo {
         preparedStatement.setNString(6, hongo.getEstado().name());
         preparedStatement.executeUpdate();
     }
+
     //Método que maneja excepciones de crear.
     public void handleCrear(Hongo hongo) {
         try {
@@ -44,8 +44,8 @@ public class ManejaDatosHongo {
         }
     }
 
-    public void obtenerHongos() throws SQLException {
-        hongos1 = new ArrayList<>();
+    private ArrayList<Hongo> obtenerHongos() throws SQLException {
+        ArrayList<Hongo> hongos1 = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM hongos");
         while (resultSet.next()) { //Si es que hay hongos entonces retorna true
             int id = resultSet.getInt("id");
@@ -62,19 +62,21 @@ public class ManejaDatosHongo {
             //}
             hongos1.add(new Hongo(id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida));
         }
+        return hongos1;
     }
     public ArrayList<Hongo> handleObtenerHongos() {
+        ArrayList<Hongo> hongos1 = new ArrayList<>();
         try {
-            obtenerHongos();
+            hongos1 = obtenerHongos();
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         }
         return hongos1;
     }
 
-    public void buscarHongoPorNombre(String busqueda) throws SQLException {
+    private ArrayList<Hongo> buscarHongoPorNombre(String busqueda) throws SQLException {
 
-        hongos2 = new ArrayList<>();
+        ArrayList<Hongo> hongos2 = new ArrayList<>();
         String sql = "SELECT * FROM hongos WHERE nombre LIKE ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setNString(1, "%" + busqueda + "%");
@@ -91,13 +93,16 @@ public class ManejaDatosHongo {
 
             hongos2.add(new Hongo(id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida));
         }
+        return hongos2;
     }
     public ArrayList<Hongo> handleBuscarHongoPorNombre(String busqueda) {
+        ArrayList<Hongo> hongos2 = new ArrayList<>();
         try {
-            buscarHongoPorNombre(busqueda);
+            hongos2 = buscarHongoPorNombre(busqueda);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         }
         return hongos2;
     }
+
 }
