@@ -1,18 +1,17 @@
 package modelo;
 
-import java.io.File;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class Hongo {
     private int id;
-    private String nombre;
-    private String geolocalizacion;
-    private String descripcion;
-    private Date fechaDeCreacion;
-    private EstadoHongo estado;
-    private String categorias;
-    private byte[] imagen;
+    private final String nombre;
+    private final String geolocalizacion;
+    private final String descripcion;
+    private final Date fechaDeCreacion;
+    private final EstadoHongo estado;
+    private final String categorias;
+    private final byte[] imagen;
 
     public Hongo(int id, String nombre, String geolocalizacion, String descripcion, String categorias, EstadoHongo estado, Date fechaDeCreacion, byte[] imagen) {
         this.id = id;
@@ -109,5 +108,18 @@ public class Hongo {
 
     public byte[] getImagen() {
         return imagen;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hongo hongo = (Hongo) o;
+        return id == hongo.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

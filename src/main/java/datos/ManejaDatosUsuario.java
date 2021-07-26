@@ -2,24 +2,30 @@ package datos;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import modelo.*;
+
+import javax.xml.transform.Result;
 
 public class ManejaDatosUsuario {
     //Conexión con la base de datos de MySQL, específicamente al esquema fungiaraucania
-    Connection connection;
+    private static Connection connection;
     //Representa un SQL statement (en lenguaje SQL)
-    Statement statement;
+    private static Statement statement;
 
     public ManejaDatosUsuario() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
+        establecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
+    public static boolean establecerConexion(String baseDatos, String usuario, String puerto) {
+        try {
+            connection = DriverManager.getConnection(baseDatos, usuario, puerto);
+            statement = connection.createStatement();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
 
     //Método que escribe un nuevo usuario en la base de datos
     private void crear(Usuario usuario) throws SQLException {
@@ -32,17 +38,18 @@ public class ManejaDatosUsuario {
         preparedStatement.setDate(4, usuario.getFechaDeCreacion());
         preparedStatement.executeUpdate();
     }
+
     public boolean handleCrear(Usuario usuario) {
         try {
             crear(usuario);
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
-    private ArrayList<Usuario> obtenerUsuario() throws SQLException {
+    private ArrayList<Usuario> obtenerUsuarios() throws SQLException {
         ArrayList<Usuario> usuarios = new ArrayList<>();
         //Los SQL Statement retornan objetos ResultSet. ResultSet es una tabla de datos representando los resultados de la base de datos
         ResultSet resultSet = statement.executeQuery("SELECT * FROM usuarios");
@@ -57,12 +64,13 @@ public class ManejaDatosUsuario {
         }
         return usuarios;
     }
-    public ArrayList<Usuario> handleObtenerUsuario() {
+
+    public ArrayList<Usuario> handleObtenerUsuarios() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
         try {
-            usuarios = obtenerUsuario();
+            usuarios = obtenerUsuarios();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
         return usuarios;
     }
@@ -91,59 +99,38 @@ public class ManejaDatosUsuario {
          return null;
      }*/
     //Actualiza el valor de un atributo especifico del usuario
-    private void actualizar(Usuario usuario, String atributoACambiar, String nuevoValorAtributo) throws SQLException {
-        int id = usuario.getId();
-        String sql = "UPDATE usuarios SET ? = ? WHERE id=?;";
+
+    private Usuario iniciarUsuario(ResultSet resultSet, String contrasena, String correoONombreDeUsuario) throws SQLException {
+
+        String correo = resultSet.getString("correo");
+        String nombreDeUsuario = resultSet.getString("nombredeusuario");
+        int id = Integer.parseInt(resultSet.getString("id"));
+
+        return new Usuario(id, nombreDeUsuario, contrasena, correoONombreDeUsuario);
+    }
+
+    private Usuario iniciarSesion(String correoONombreDeUsuario, String contrasena) throws SQLException {
+
+        String sql = "SELECT * FROM usuarios WHERE (correo = ? OR nombredeusuario = ?) AND contrasena = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setNString(1, atributoACambiar.toLowerCase());
-        preparedStatement.setNString(2, nuevoValorAtributo);
-        preparedStatement.setInt(3, id);
-        preparedStatement.executeUpdate();
-    }
-    public void handleActualizar(Usuario usuario, String atributoACambiar, String nuevoValorAtributo) {
-        try {
-            actualizar(usuario, atributoACambiar, nuevoValorAtributo);
-
-        } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+        preparedStatement.setNString(1, correoONombreDeUsuario);
+        preparedStatement.setNString(2, correoONombreDeUsuario);
+        preparedStatement.setNString(3, contrasena);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return iniciarUsuario(resultSet, correoONombreDeUsuario, contrasena);
+        } else {
+            System.out.println("El usuario no se encuentra en nuestra base de datos");
+            return null;
         }
     }
 
-    private void eliminar(Usuario usuario) throws SQLException {
-        int id = usuario.getId();
-        String sql = "DELETE FROM usuarios WHERE id = ?;";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
-    }
-    public void handleEliminar(Usuario usuario) {
+    public Usuario handleIniciarSesion(String correoONombreDeUsuario, String contrasena) {
         try {
-            eliminar(usuario);
+            return iniciarSesion(correoONombreDeUsuario, contrasena);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
+            return null;
         }
-    }
-
-    public Usuario iniciarSesion(String correoONombreDeUsuario, String contrasena) {
-        try {
-            String sql = "SELECT * FROM usuarios WHERE (correo = ? OR nombredeusuario = ?) AND contrasena = ?;";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setNString(1, correoONombreDeUsuario);
-            preparedStatement.setNString(2, correoONombreDeUsuario);
-            preparedStatement.setNString(3, contrasena);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String correo = resultSet.getString("correo");
-                String nombreDeUsuario = resultSet.getString("nombredeusuario");
-                int id = Integer.parseInt(resultSet.getString("id"));
-
-                return new Usuario(id, nombreDeUsuario, contrasena, correoONombreDeUsuario);
-            } else {
-                System.out.println("El usuario no se encuentra en nuestra base de datos");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        return null;
     }
 }

@@ -1,22 +1,28 @@
 package datos;
 
 import modelo.*;
+
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ManejaDatosHongo {
     //Conexión con la base de datos de MySQL, específicamente al esquema fungiaraucania
-    Connection connection;
+    private static Connection connection;
     //Representa un SQL statement (en lenguaje SQL)
-    Statement statement;
+    private static Statement statement;
 
     public ManejaDatosHongo(){
+        establecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
+    }
+
+    public static boolean establecerConexion(String baseDatos, String usuario, String puerto){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
+            connection = DriverManager.getConnection(baseDatos, usuario, puerto);
             statement = connection.createStatement();
-        }catch(SQLException e){
-            System.err.println("Error: "+e.getMessage());
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+            return false;
         }
     }
 
@@ -32,23 +38,25 @@ public class ManejaDatosHongo {
         preparedStatement.setDate(4, hongo.getFechaDeCreacion());
         preparedStatement.setNString(5, hongo.getCategorias());
         preparedStatement.setNString(6, hongo.getEstado().name());
-            byte[] bytesImagen = hongo.getImagen ();
-            if(bytesImagen == null){
-                //En caso de que sea null, se sube un null
-                preparedStatement.setNull (7, Types.BLOB);
-            }else {
-                Blob blob = new javax.sql.rowset.serial.SerialBlob (hongo.getImagen ()); // Creando el blob que almacena los bytes de la imágen
-                preparedStatement.setBlob (7, blob);
-            }
+        byte[] bytesImagen = hongo.getImagen ();
+        if(bytesImagen == null){
+            //En caso de que sea null, se sube un null
+            preparedStatement.setNull (7, Types.BLOB);
+        }else {
+            Blob blob = new javax.sql.rowset.serial.SerialBlob (hongo.getImagen ()); // Creando el blob que almacena los bytes de la imágen
+            preparedStatement.setBlob (7, blob);
+        }
         preparedStatement.executeUpdate();
     }
 
     //Método que maneja excepciones de crear.
-    public void handleCrear(Hongo hongo) {
+    public boolean handleCrear(Hongo hongo) {
         try {
             crear(hongo);
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return false;
         }
     }
 
@@ -118,4 +126,5 @@ public class ManejaDatosHongo {
         }
         return hongos2;
     }
+
 }

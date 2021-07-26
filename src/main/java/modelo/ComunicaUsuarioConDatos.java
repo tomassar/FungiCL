@@ -8,17 +8,13 @@ public class ComunicaUsuarioConDatos {
     private static ManejaDatosUsuario manejoDatosUsuario = new ManejaDatosUsuario();
 
     public static Usuario inicarSesion(String nombreDeUsuarioText, String contrasenaTexto) {
-        return manejoDatosUsuario.iniciarSesion(nombreDeUsuarioText, contrasenaTexto);
-    }
-
-    public static ArrayList<Usuario> obtenerUsuarios(){
-        return manejoDatosUsuario.handleObtenerUsuario();
+        return manejoDatosUsuario.handleIniciarSesion(nombreDeUsuarioText, contrasenaTexto);
     }
 
     public static String crearCuenta(String[] datos){
         Usuario usuario = new Usuario(datos[0], datos[1], datos[2]);
         for (String dato:
-             datos) {
+                datos) {
             if(ValidaDatosUsuario.esVacio (dato)){
                 return "<html><p style='color:red'>Por favor, llene los campos faltantes</p></html>";
             }
