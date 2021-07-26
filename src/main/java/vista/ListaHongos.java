@@ -1,7 +1,9 @@
 package vista;
 
 import modelo.ComunicaHongoConDatos;
+import modelo.EstadoHongo;
 import modelo.Hongo;
+import modelo.TipoHongo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ListaHongos {
@@ -89,7 +92,7 @@ public class ListaHongos {
                 // Loop through the file storage and see which file is the selected one.
                 for (Hongo hongo : ComunicaHongoConDatos.obtenerHongos ()) {
                     if (hongo.getId() == hongoId) {
-                        JFrame jfPreview = createFrame(hongo.getNombre (), hongo.getDescripcion (), hongo.getGeolocalizacion (), hongo.getCategorias (), "ds",hongo.getImagen ());
+                        JFrame jfPreview = createFrame(hongo);
                         jfPreview.setVisible(true);
                     }
                 }
@@ -118,36 +121,47 @@ public class ListaHongos {
     }
 
     //Se crea la ventana que sirve para visualizar la información del hongo seleccionado
-    public static JFrame createFrame(String fileName, String fileData, String geolocalizacion, String categorias, String fileExtension, byte[] imagen) {
+    public static JFrame createFrame(Hongo hongo) {
+        String nombre = hongo.getNombre ();
+        String descripcion = hongo.getDescripcion ();
+        String geolocalizacion = hongo.getGeolocalizacion ();
+        ArrayList<TipoHongo> categorias = hongo.getCategorias ();
+        byte[] imagen = hongo.getImagen ();
+        EstadoHongo estaConfirmado = hongo.getEstado ();
 
-        JFrame jFrame = new JFrame(fileName);
+        JFrame jFrame = new JFrame(nombre);
         jFrame.setSize(500, 500);
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
 
 
-        JLabel jlPrompt = new JLabel(fileName);
+        JLabel jlPrompt = new JLabel(nombre);
         jlPrompt.setFont(new Font("Arial", Font.BOLD, 20));
         jlPrompt.setBorder(new EmptyBorder(20,0,10,0));
         jlPrompt.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
+        // Se crea un Label para mostrar la imágen del hongo
+        JLabel jlImageContent = new JLabel();
+        jlImageContent.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Panel que mantiene el label para mostrar la descripción
+        JPanel jpImageContent = new JPanel();
+        jpImageContent.add(jlImageContent);
+
+        // Para mostrar la imágen
+        jlImageContent.setIcon(new ImageIcon(imagen));
+
+
         // Se crea un Label para mostrar la descripción del hongo
         JLabel jlFileContent = new JLabel();
-        jlFileContent.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jlFileContent.setAlignmentX(Component.LEFT_ALIGNMENT);
         // Panel que mantiene el label para mostrar la descripción
         JPanel jpFileContent = new JPanel();
         jpFileContent.add(jlFileContent);
+        // Se usa HTML para que el párrafo pueda verse completo.
+        jlFileContent.setText("<html><p style='width:270px'>" + new String(descripcion) + "</p></html>");
 
-        // Si el archivo es de texto, se muestra el texto
-        if (fileExtension.equalsIgnoreCase("")) {
-            // Wrap it with <html> so that new lines are made.
-            jlFileContent.setText("<html><p style='width:270px'>" + new String(fileData) + "</p></html>");
-            // Si el archivo es una imagen, se ve la imagen.
-        } else {
-            jlFileContent.setIcon(new ImageIcon(imagen));
-        }
 
 
         // Se crea un Label para mostrar la geolocalización
@@ -156,7 +170,8 @@ public class ListaHongos {
         // Panel que mantiene el label para mostrar el contenido del archivo.
         JPanel jpGeolocalizacion = new JPanel();
         jpGeolocalizacion.add(jlGeolocalizacion);
-        jlGeolocalizacion.setText ("Geolocalización: "+geolocalizacion);
+
+        jlGeolocalizacion.setText ("<html><p style='width:270px'>Geolocalización: "+geolocalizacion+"</p></html>");
 
         // Se crea un Label para mostrar las categorias
         JLabel jlCategorias = new JLabel();
@@ -164,16 +179,38 @@ public class ListaHongos {
         // Panel que mantiene el label para mostrar el contenido del archivo.
         JPanel jpCategorias = new JPanel();
         jpCategorias.add(jlCategorias);
-        jlCategorias.setText ("Categorías :"+categorias);
 
+        if(categorias.size() != 0){
+            String strCategorias = "";
+            for (TipoHongo tipoHongo:
+                 categorias) {
+                strCategorias += tipoHongo.toString ()+", ";
+            }
+            //Para eliminar la última coma
+            strCategorias = strCategorias.substring (0, strCategorias.length () - 2);
+            jlCategorias.setText ("<html><p style='width:270px'>Categorías: "+strCategorias+"</p></html>");
+        }
 
+        // Se crea un Label para mostrar si está confirmado o no
+        JLabel jlEstaConfirmado = new JLabel();
+        jlEstaConfirmado.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // Panel que mantiene el label para mostrar el contenido del archivo.
+        JPanel jpEstaConfirmado = new JPanel();
+        jpEstaConfirmado.add(jlEstaConfirmado);
 
+        if(estaConfirmado.toString ().equals ("POR_CONFIRMAR")){
+            jlEstaConfirmado.setText ("<html><p style='width:270px;color:red'>Este hongo no está confirmado, por favor tenga discreción.</p></html>");
+        }else{
+            jlEstaConfirmado.setText ("<html><p style='width:270px;color:green'> Este hongo está confirmado, puede confiar en esta información.</p></html>");
+        }
 
 
         jPanel.add(jlPrompt);
+        jPanel.add(jpImageContent);
         jPanel.add(jpFileContent);
         jPanel.add(jpGeolocalizacion);
         jPanel.add(jpCategorias);
+        jPanel.add(jpEstaConfirmado);
 
         jFrame.add(jPanel);
         jFrame.setLocationRelativeTo(null);

@@ -16,11 +16,11 @@ public class ComunicaHongoConDatos {
         return manejaDatosHongo.handleObtenerHongos ();
     }
 
-    public static void crearHongo(String nombre, String geolocalizacion, String descripcion, String categorias) {
-        manejaDatosHongo.handleCrear(new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR));
-    }
+    //public static void crearHongo(String nombre, String geolocalizacion, String descripcion, String categorias) {
+     //   manejaDatosHongo.handleCrear(new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR));
+    //}
 
-    public static void crearHongoConImagen(String nombre, String geolocalizacion, String descripcion, String categorias, File imagen) {
+    public static void crearHongoConImagen(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen) {
 
         //convertir el File imágen a un arreglo de bytes
         // Se crea un array de bytes del tamaño del archivo
@@ -28,14 +28,19 @@ public class ComunicaHongoConDatos {
         try {
             //rediomensiona la imágen a un tamaño adecuado
             fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath ());
-            //fileBytes = Utilidades.read (imagen);
         } catch (IOException e) {
             fileBytes = null;
             e.printStackTrace ();
         }
-        // Se pone el contenido del archivo en el array de bytes creado para que sea enviado.
+
+        //Convertir categorias String a TipoHongo
+        ArrayList<TipoHongo> categoriasEnumeration = new ArrayList<> ();
+        for (String categoria:
+             categorias) {
+            categoriasEnumeration.add(TipoHongo.valueOf (categoria));
+        }
         try {
-            manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR, fileBytes));
+            manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes));
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
         }

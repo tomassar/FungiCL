@@ -36,7 +36,15 @@ public class ManejaDatosHongo {
         preparedStatement.setNString(2, hongo.getGeolocalizacion());
         preparedStatement.setNString(3, hongo.getDescripcion());
         preparedStatement.setDate(4, hongo.getFechaDeCreacion());
-        preparedStatement.setNString(5, hongo.getCategorias());
+        // Las categorías se guardan separadas por un ; en la base de datos.
+        ArrayList<TipoHongo> categoriasArrList = hongo.getCategorias ();
+        String categorias = "";
+        for (TipoHongo categoriaEnum:
+             categoriasArrList) {
+            categorias += categoriaEnum.toString ()+";";
+        }
+        categorias = categorias.substring (0, categorias.length () - 1);
+        preparedStatement.setNString(5, categorias);
         preparedStatement.setNString(6, hongo.getEstado().name());
         byte[] bytesImagen = hongo.getImagen ();
         if(bytesImagen == null){
@@ -71,18 +79,24 @@ public class ManejaDatosHongo {
             Date fechaDeSubida = resultSet.getDate("fechadecreacion");
             EstadoHongo estado = EstadoHongo.valueOf(resultSet.getString("estado").toUpperCase());
             String categorias = resultSet.getString("categorias");
+            String[] arrCategorias = categorias.split (";");
+            ArrayList<TipoHongo> categoriasArrList = new ArrayList<> ();
+            for (String categoria: arrCategorias) {
+                if (!categoria.equals ("")) {
+                    categoriasArrList.add (TipoHongo.valueOf (categoria.toUpperCase ()));
+                }
+            }
             Blob blob = resultSet.getBlob ("imagen");
-                //convertir blob a un arreglo de bytes
+            //convertir blob a un arreglo de bytes
+            byte[] blobAsBytes = null;
+            if(blob != null){
                 int blobLength = (int) blob.length();
-                byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                blobAsBytes = blob.getBytes(1, blobLength);
                 //Liberar el blob para liberar memoria
                 blob.free();
-                //ArrayList<TipoHongo> categorias = new ArrayList<> ();
-                //for (String categoria:
-                //        arrCategorias) {
-                //    categorias.add(TipoHongo.valueOf(categoria.toUpperCase ()));
-                //}
-                hongos1.add(new Hongo(id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida, blobAsBytes));
+            }else{
+            }
+            hongos1.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida, blobAsBytes));
         }
         return hongos1;
     }
@@ -112,8 +126,19 @@ public class ManejaDatosHongo {
             Date fechaDeSubida = resultSet.getDate("fechadecreacion");
             EstadoHongo estado = EstadoHongo.valueOf(resultSet.getString("estado").toUpperCase());
             String categorias = resultSet.getString("categorias");
+            String[] arrCategorias = categorias.split (";");
+            ArrayList<TipoHongo> categoriasArrList = new ArrayList<> ();
+            for (String categoria: arrCategorias) {
+                categoriasArrList.add(TipoHongo.valueOf(categoria.toUpperCase ()));
+            }
+            Blob blob = resultSet.getBlob ("imagen");
+            //convertir blob a un arreglo de bytes
+            int blobLength = (int) blob.length();
+            byte[] blobAsBytes = blob.getBytes(1, blobLength);
+            //Liberar el blob para liberar memoria
+            blob.free();
 
-            hongos2.add(new Hongo(id, nombre, geolocalizacion, descripcion, categorias, estado, fechaDeSubida));
+            hongos2.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida,blobAsBytes));
         }
         return hongos2;
     }

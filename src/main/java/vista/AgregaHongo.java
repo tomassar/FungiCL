@@ -1,5 +1,6 @@
 package vista;
 
+import jdk.jfr.Category;
 import modelo.ComunicaHongoConDatos;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class AgregaHongo extends JDialog {
@@ -21,7 +23,11 @@ public class AgregaHongo extends JDialog {
     private JTextField textCategorias;
     private JButton agregarButton;
     private JButton elegirImágenButton;
-    private File imagen; //imágen del hongo
+    private JCheckBox venenosoCheckBox;
+    private JCheckBox comestibleCheckBox;
+    private JCheckBox medicinalCheckBox;
+    private JCheckBox alucinógenoCheckBox;
+    private File imagen = null; //imágen del hongo
 
     public AgregaHongo(Menu parent, boolean modal) {
         super (parent, modal);
@@ -47,7 +53,19 @@ public class AgregaHongo extends JDialog {
                 String nombre = textNombre.getText ();
                 String geolocalizacion = textGeo.getText ();
                 String descripcion = textDesc.getText ();
-                String categorias = textCategorias.getText ();
+                ArrayList<String> categorias = new ArrayList ();
+                if (venenosoCheckBox.isSelected ()) {
+                    categorias.add ("VENENOSO");
+                }
+                if (comestibleCheckBox.isSelected ()) {
+                    categorias.add ("COMESTIBLE");
+                }
+                if (medicinalCheckBox.isSelected ()) {
+                    categorias.add ("MEDICINAL");
+                }
+                if (alucinógenoCheckBox.isSelected ()) {
+                    categorias.add ("ALUCINOGENO");
+                }
                 ComunicaHongoConDatos.crearHongoConImagen (nombre, geolocalizacion, descripcion, categorias, imagen);
             }
         });
@@ -84,7 +102,7 @@ public class AgregaHongo extends JDialog {
         panel1 = new JPanel ();
         panel1.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (4, 1, new Insets (10, 10, 10, 10), -1, -1));
         final JPanel panel2 = new JPanel ();
-        panel2.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (4, 2, new Insets (0, 0, 0, 0), -1, -1));
+        panel2.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (4, 5, new Insets (0, 0, 0, 0), -1, -1));
         panel1.add (panel2, new com.intellij.uiDesigner.core.GridConstraints (1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel ();
         label1.setText ("Nombre");
@@ -99,14 +117,23 @@ public class AgregaHongo extends JDialog {
         label4.setText ("Categorías");
         panel2.add (label4, new com.intellij.uiDesigner.core.GridConstraints (3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textNombre = new JTextField ();
-        panel2.add (textNombre, new com.intellij.uiDesigner.core.GridConstraints (0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
+        panel2.add (textNombre, new com.intellij.uiDesigner.core.GridConstraints (0, 1, 1, 4, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
         textGeo = new JTextField ();
-        panel2.add (textGeo, new com.intellij.uiDesigner.core.GridConstraints (1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
+        panel2.add (textGeo, new com.intellij.uiDesigner.core.GridConstraints (1, 1, 1, 4, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
         textDesc = new JTextField ();
-        panel2.add (textDesc, new com.intellij.uiDesigner.core.GridConstraints (2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
-        textCategorias = new JTextField ();
-        textCategorias.setText ("");
-        panel2.add (textCategorias, new com.intellij.uiDesigner.core.GridConstraints (3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
+        panel2.add (textDesc, new com.intellij.uiDesigner.core.GridConstraints (2, 1, 1, 4, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension (150, -1), null, 0, false));
+        venenosoCheckBox = new JCheckBox ();
+        venenosoCheckBox.setText ("Venenoso");
+        panel2.add (venenosoCheckBox, new com.intellij.uiDesigner.core.GridConstraints (3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        comestibleCheckBox = new JCheckBox ();
+        comestibleCheckBox.setText ("Comestible");
+        panel2.add (comestibleCheckBox, new com.intellij.uiDesigner.core.GridConstraints (3, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        medicinalCheckBox = new JCheckBox ();
+        medicinalCheckBox.setText ("Medicinal");
+        panel2.add (medicinalCheckBox, new com.intellij.uiDesigner.core.GridConstraints (3, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        alucinógenoCheckBox = new JCheckBox ();
+        alucinógenoCheckBox.setText ("Alucinógeno");
+        panel2.add (alucinógenoCheckBox, new com.intellij.uiDesigner.core.GridConstraints (3, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel ();
         Font label5Font = this.$$$getFont$$$ (null, -1, 18, label5.getFont ());
         if (label5Font != null) label5.setFont (label5Font);
