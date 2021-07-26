@@ -2,6 +2,7 @@ package datos;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import modelo.*;
 
 import javax.xml.transform.Result;
@@ -13,19 +14,23 @@ public class ManejaDatosUsuario {
     private static Statement statement;
 
     public ManejaDatosUsuario() {
-        establecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
+        handleEstablecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
-    public static boolean establecerConexion(String baseDatos, String usuario, String puerto) {
+    private void establecerConexion(String baseDatos, String usuario, String puerto) throws SQLException {
+        connection = DriverManager.getConnection(baseDatos, usuario, puerto);
+        statement = connection.createStatement();
+    }
+    public boolean handleEstablecerConexion(String baseDatos, String usuario, String puerto) {
         try {
-            connection = DriverManager.getConnection(baseDatos, usuario, puerto);
-            statement = connection.createStatement();
+            establecerConexion(baseDatos, usuario, puerto);
             return true;
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
             return false;
         }
     }
+
 
     //Método que escribe un nuevo usuario en la base de datos
     private void crear(Usuario usuario) throws SQLException {
@@ -75,30 +80,6 @@ public class ManejaDatosUsuario {
         return usuarios;
     }
 
-    /* //Retorna un objeto Usuario con los datos obtenidos de la base de datos usando el id del usuario
-     public Usuario leer(int id) {
-         try {
-             String sql = "SELECT * FROM usuarios WHERE id = ?";
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             preparedStatement.setInt(1, id);
-             ResultSet resultSet = preparedStatement.executeQuery();
-
-             if (resultSet.next()) { //Si es que existe el usuario con el id indicado, entonces resultSet.next() será true
-                 String nombreDeUsuario = resultSet.getString("nombredeusuario");
-                 String correo = resultSet.getString("correo");
-                 String contrasena = resultSet.getString("contrasena");
-                 Date fechaDeCreacion = resultSet.getDate("fechadecreacion");
-
-                 return new Usuario(id, nombreDeUsuario, contrasena, correo, fechaDeCreacion);
-             } else {
-                 System.out.println("El usuario con el id " + id + " no se encuentra en nuestra base de datos.");
-             }
-         } catch (SQLException e) {
-             System.err.println("Error: " + e.getMessage());
-         }
-         return null;
-     }*/
-    //Actualiza el valor de un atributo especifico del usuario
 
     private Usuario iniciarUsuario(ResultSet resultSet, String contrasena, String correoONombreDeUsuario) throws SQLException {
 

@@ -39,11 +39,7 @@ public class ComunicaHongoConDatos {
              categorias) {
             categoriasEnumeration.add(TipoHongo.valueOf (categoria));
         }
-        try {
-            manejaDatosHongo.crear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace ();
-        }
+            manejaDatosHongo.handleCrear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes));
     }
 
     public static ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {
