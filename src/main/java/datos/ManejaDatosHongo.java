@@ -15,7 +15,7 @@ public class ManejaDatosHongo {
         establecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
-    public static boolean establecerConexion(String baseDatos, String usuario, String puerto){
+    public boolean establecerConexion(String baseDatos, String usuario, String puerto){
         try {
             connection = DriverManager.getConnection(baseDatos, usuario, puerto);
             statement = connection.createStatement();
