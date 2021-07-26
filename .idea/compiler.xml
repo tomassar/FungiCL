@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="FungiCL" />
+        <module name="ProyectoFungi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="FungiCL" target="15" />
+      <module name="ProyectoFungi" target="15" />
     </bytecodeTargetLevel>
   </component>
 </project>
