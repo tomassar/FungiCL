@@ -33,7 +33,7 @@ public class TestManejaDatosUsuario {
     @DisplayName("Test para verificar fallo al crear un usuario")
     void FalloAlCrearUsuario(){
 
-        Usuario usuario = new Usuario(1, "Genérico", "generico@generico.com", "contrasenia");
+        Usuario usuario = new Usuario(1, "Genérico", "contrasenia", "generico@generico.com");
         assertFalse(manejo.handleCrear(usuario));
     }
 
@@ -47,6 +47,6 @@ public class TestManejaDatosUsuario {
     @Test
     @DisplayName("Test para verificar fallo al iniciar sesión")
     void FalloAlBuscarHongos(){
-        assertNull(manejo.handleIniciarSesion("generico@generico.com", "contrasenia"));
+        assertNull(manejo.handleIniciarSesion("inexistente@generico.com", "contrasenia"));
     }
 }

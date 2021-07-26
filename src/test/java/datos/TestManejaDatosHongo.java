@@ -46,6 +46,6 @@ class TestManejaDatosHongo {
     @DisplayName("Test para verificar fallo al buscar hongos por nombre en la base de datos")
     void FalloAlBuscarHongos(){
 
-        assertEquals(0, manejo.handleBuscarHongoPorNombre("Genérico").size());
+        assertEquals(0, manejo.handleBuscarHongoPorNombre("inexistente").size());
     }
 }
