@@ -13,7 +13,7 @@ import java.util.Locale;
 import modelo.ComunicaUsuarioConDatos;
 import utilidades.Utilidades;
 
-public class VentanaCrearCuenta extends JDialog implements ActionListener {
+public class CreaCuenta extends JDialog implements ActionListener {
 private JPanel panel1;
 private JTextField email;
 private JPasswordField contrasena;
@@ -24,7 +24,7 @@ private JButton volverButton;
 private JLabel labelAlerta;
 JFrame parent;
 
-public VentanaCrearCuenta(JFrame parent, boolean modal) {
+public CreaCuenta(JFrame parent, boolean modal) {
     super (parent, modal);
     setTitle ("Crear cuenta");
     this.setSize (800, 600);

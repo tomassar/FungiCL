@@ -4,7 +4,7 @@ import vista.*;
 public class App {
 
     public static void main(String[] args) {
-        IniciarSesion iniciarSesion = new IniciarSesion ();
+        IniciaSesion iniciarSesion = new IniciaSesion();
         iniciarSesion.setVisible (true);
     }
 }

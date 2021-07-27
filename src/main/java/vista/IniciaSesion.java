@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
-public class IniciarSesion extends JFrame implements ActionListener {
+public class IniciaSesion extends JFrame implements ActionListener {
     private JPanel mainContainer;
     private JButton registrarseButton;
     private JTextField textoUsuario;
@@ -20,7 +20,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JLabel errorLabel;
     private JLabel imagen;
 
-    public IniciarSesion() {
+    public IniciaSesion() {
 
         // Tamaño de la ventana
         this.setMinimumSize (new Dimension (500, 500));
@@ -53,7 +53,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
 
         });
         registrarseButton.addActionListener (e -> {
-            VentanaCrearCuenta ventanaCrearCuenta = new VentanaCrearCuenta (this, true);
+            CreaCuenta ventanaCrearCuenta = new CreaCuenta(this, true);
             ventanaCrearCuenta.setVisible (true);
         });
     }
