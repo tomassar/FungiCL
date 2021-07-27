@@ -14,8 +14,21 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/**
+ * @author Proyecto FungiAraucania
+ * Clase que sirve para desplegar la lista de hongos en la base de datos.
+ **/
+
 public class ListaHongos {
     ArrayList<Hongo> hongos;
+
+    /**
+     * Método que crea una ventana donde se despliega la lista de hongos
+     * que existe en la base de datos. El usuario puede pinchar uno
+     * y ver la información asociada a dicho hongo.
+     * @param parent BuscaHongo.
+     * @param hongos lista de objetos perteneciente a la clase Hongo.
+     */
     public ListaHongos(BuscaHongo parent, ArrayList<Hongo> hongos){
         this.hongos = hongos;
 
@@ -77,8 +90,9 @@ public class ListaHongos {
     }
 
     /**
-     * Cuando se hace click en el nombre del hongo, se abre una ventana nueva (método createFrame) para mostrar información del hongo
-     * @return A mouselistener that is used by the jpanel.
+     * Cuando se hace click en el nombre del hongo, se abre una ventana nueva (método createFrame)
+     * para mostrar información del hongo.
+     * @return un mouselistener que lo utiliza el jpanel.
      */
     public static MouseListener getMyMouseListener() {
         return new MouseListener() {

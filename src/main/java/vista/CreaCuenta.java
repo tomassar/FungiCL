@@ -12,6 +12,10 @@ import java.util.Locale;
 
 import modelo.ComunicaUsuarioConDatos;
 import utilidades.Utilidades;
+/**
+ * @author Proyecto FungiAraucania
+ * Clase que sirve para crearse una cuenta en la base de datos.
+ **/
 
 public class CreaCuenta extends JDialog implements ActionListener {
 private JPanel panel1;
@@ -24,7 +28,15 @@ private JButton volverButton;
 private JLabel labelAlerta;
 JFrame parent;
 
-public CreaCuenta(JFrame parent, boolean modal) {
+    /**
+     * Método que crea una cuenta en la base de datos. Para ello,
+     * se crea una ventana JFrame con la que pueda interactuar el usuario.
+     * Tiene campos para crear cuenta.
+     * @param parent IniciaSesion.
+     * @param modal valor que determina si se puede o no interactuar con la ventana padre.
+     */
+
+    public CreaCuenta(JFrame parent, boolean modal) {
     super (parent, modal);
     setTitle ("Crear cuenta");
     this.setSize (800, 600);

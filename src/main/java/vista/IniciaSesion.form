@@ -54,7 +54,7 @@
               <text value="Contraseña:"/>
             </properties>
           </component>
-          <component id="954b2" class="javax.swing.JPasswordField" binding="textoContraseña">
+          <component id="954b2" class="javax.swing.JPasswordField" binding="textoContrasena">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -87,7 +87,7 @@
           </component>
         </children>
       </grid>
-      <component id="338fa" class="javax.swing.JButton" binding="iniciarSesiónButton" default-binding="true">
+      <component id="338fa" class="javax.swing.JButton" binding="iniciarSesionButton" default-binding="true">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
