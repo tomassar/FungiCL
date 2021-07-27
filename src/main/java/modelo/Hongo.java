@@ -4,7 +4,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Autores: Proyecto FungiAraucania
+ * Clase Hongo
+ */
 public class Hongo {
+
     private int id;
     private final String nombre;
     private final String geolocalizacion;
@@ -14,7 +19,18 @@ public class Hongo {
     private final ArrayList<TipoHongo> categorias;
     private final byte[] imagen;
 
-    // Constructor para los hongos retirados de la bas de datos (ya tenían una fecha de creación y una id)
+    /**
+     * Constructor para los hongos provenientes de la base de datos.
+     * (Ya tienen una id y fecha de creación asociada).
+     * @param id
+     * @param nombre
+     * @param geolocalizacion
+     * @param descripcion
+     * @param categorias
+     * @param estado
+     * @param fechaDeCreacion
+     * @param imagen
+     */
     public Hongo(int id, String nombre, String geolocalizacion, String descripcion, ArrayList<TipoHongo> categorias, EstadoHongo estado, Date fechaDeCreacion, byte[] imagen) {
         this.id = id;
         this.nombre = nombre;
@@ -26,7 +42,17 @@ public class Hongo {
         this.imagen = imagen;
     }
 
-    //Constructor para los hongos a crear (la id es asignada automáticamente por la base de datos y la fecha también se asigna automáticamente en Java)
+    /**
+     * Constructor para los hongos a crear. Tanto la id como la fecha de creación
+     * son asignadas automáticamente. La id por defecto es -1, pero la base
+     * de datos se encarga de darle una id final.
+     * @param nombre
+     * @param geolocalizacion
+     * @param descripcion
+     * @param categorias
+     * @param estado
+     * @param imagen
+     */
     public Hongo(String nombre, String geolocalizacion, String descripcion, ArrayList<TipoHongo> categorias, EstadoHongo estado, byte[] imagen) {
         this.nombre = nombre;
         this.geolocalizacion = geolocalizacion;
@@ -38,33 +64,73 @@ public class Hongo {
         this.id = -1;
     }
 
+    /**
+     *
+     * @return
+     */
+
     public int getId() {
         return id;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public EstadoHongo getEstado() {
         return estado;
     }
 
+    /**
+     *
+     * @return
+     */
+
     public String getNombre() {
         return nombre;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public String getGeolocalizacion() {
         return geolocalizacion;
     }
 
+    /**
+     *
+     * @return
+     */
+
     public String getDescripcion() {
         return descripcion;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public Date getFechaDeCreacion() {
         return fechaDeCreacion;
     }
 
+    /**
+     *
+     * @return
+     */
+
     public ArrayList<TipoHongo> getCategorias() {
         return categorias;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public byte[] getImagen() {
         return imagen;

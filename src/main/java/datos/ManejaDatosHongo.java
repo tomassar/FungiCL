@@ -14,14 +14,37 @@ public class ManejaDatosHongo {
     //Representa un SQL statement (en lenguaje SQL)
     private static Statement statement;
 
+    /**
+     * @Autores: Proyecto FungiAraucania
+     * @Descripción: Constructor de la clase ManejaDatosHongo.
+     * Realiza conexión con la base de datos del proyecto.
+     * No requiere parámetros.
+     **/
     public ManejaDatosHongo() {
         handleEstablecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
+    /**
+     * Método privado que comunica la clase con la base de datos.
+     * @param baseDatos: String
+     * @param usuario: String
+     * @param puerto: String
+     * @throws SQLException: Error que ocurre cuando no se logra establecer la conexión.
+     * Favor de revisar la clase SQL.
+     **/
     private void establecerConexion(String baseDatos, String usuario, String puerto) throws SQLException {
         connection = DriverManager.getConnection(baseDatos, usuario, puerto);
         statement = connection.createStatement();
     }
+
+    /**
+     * Método publico utilizado para realizar la conexión con la base de datos.
+     * @param baseDatos
+     * @param usuario
+     * @param puerto
+     * @return: boolean.
+     **/
+
     public boolean handleEstablecerConexion(String baseDatos, String usuario, String puerto) {
         try {
             establecerConexion(baseDatos, usuario, puerto);
@@ -32,7 +55,12 @@ public class ManejaDatosHongo {
         }
     }
 
-    //Método que escribe un nuevo hongo en la base de datos
+    /**
+     * Método privado que escribe un nuevo hongo en la base de datos.
+     * @param hongo: Objeto de tipo Hongo. Revisar documentación de Hongo.
+     * @throws SQLException
+     **/
+
     public void crear(Hongo hongo) throws SQLException {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
         //PreparedStatement es para evitar SQL Injection.
@@ -57,7 +85,15 @@ public class ManejaDatosHongo {
         }
         preparedStatement.executeUpdate();
     }
-    //Método que maneja excepciones de crear.
+
+    /**
+     * Método público que se encarga de verificar que se haya creado el hongo,
+     * utilizado en las pruebas unitarias del programa y para mostrar
+     * mensaje en pantalla de que se ha creado un hongo.
+     * @param hongo
+     * @return: boolean
+     **/
+
     public boolean handleCrear(Hongo hongo) {
         try {
             if(hongo.getId () != -1){
@@ -78,6 +114,14 @@ public class ManejaDatosHongo {
         }
     }
 
+    /**
+     * Método privado para recuperar Hongos de la base de datos e instanciarlos
+     * después en el apartado vista para mostrarlo en pantalla. Favor
+     * de revisar el paquete vista.
+     * @return: ArrayList<Hongo>
+     * @throws SQLException
+     **/
+
     private ArrayList<Hongo> obtenerHongos() throws SQLException {
         ArrayList<Hongo> hongos1 = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM hongos");
@@ -97,6 +141,12 @@ public class ManejaDatosHongo {
         return hongos1;
     }
 
+    /**
+     * Método público para recuperar Hongos de la base de datos. Utilizado
+     * para las pruebas unitarias e instanciar los hongos en la vista.
+     * Favor revisar la vista.
+     * @return: ArrayList<Hongo>
+     */
     public ArrayList<Hongo> handleObtenerHongos() {
         ArrayList<Hongo> hongos1 = new ArrayList<>();
         try {
@@ -106,6 +156,14 @@ public class ManejaDatosHongo {
         }
         return hongos1;
     }
+
+    /**
+     * Método privado que retorna una lista de Hongos que contengan
+     * la cadena indicada por el usuario. Favor revisar el paquete vista.
+     * @param busqueda: String
+     * @return: ArrayList<Hongo>
+     * @throws SQLException
+     **/
 
     private ArrayList<Hongo> buscarHongoPorNombre(String busqueda) throws SQLException {
 
@@ -139,6 +197,13 @@ public class ManejaDatosHongo {
         }
         return hongos2;
     }
+
+    /**
+     * Método público que retorna una lista de Hongos que contengan
+     * la cadena indicada por el usuario.
+     * @param busqueda
+     * @return: ArrayList<Hongo>
+     */
     public ArrayList<Hongo> handleBuscarHongoPorNombre(String busqueda) {
         ArrayList<Hongo> hongos2 = new ArrayList<>();
         try {
@@ -148,5 +213,4 @@ public class ManejaDatosHongo {
         }
         return hongos2;
     }
-
 }
