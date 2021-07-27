@@ -1,5 +1,14 @@
 package modelo;
-
+/**
+ *  Estado de los hongos, si están activos o no
+ */
 public enum EstadoHongo {
-    ACTIVO, POR_CONFIRMAR
+    /**
+     * Hongo activo
+     */
+    ACTIVO,
+    /**
+     * Hongo confirmado
+     */
+    POR_CONFIRMAR
 }

@@ -9,18 +9,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Autores: Proyecto FungiAraucania.
+ * Autores: Proyecto FungiAraucania
  * Clase estática que comunica la clase Hongo con la clase ManejaDatosHongo.
  * Favor de revisar el paquete datos y la clase Hongo del paquete modelo.
  */
-
 public class ComunicaHongoConDatos {
 
     private static final ManejaDatosHongo manejaDatosHongo = new ManejaDatosHongo();
 
     /**
      * Método público que retorna la lista de hongos desde ManejoDatosHongo.
-     * @return ArrayList<Hongo>.
+     * @return
      */
     public static ArrayList<Hongo> obtenerHongos(){
         return manejaDatosHongo.handleObtenerHongos ();
@@ -28,13 +27,13 @@ public class ComunicaHongoConDatos {
 
     /**
      * Método que crea un hongo y muestra en pantalla si se ha podido o no crear.
-     * @param nombre cadena con el nombre del hongo.
-     * @param geolocalizacion cadena con la geolocalización del hongo.
-     * @param descripcion cadena con la descripción del hongo.
-     * @param categorias ArrayList de cadenas con las categorías del hongo.
-     * @param imagen archivo con imagen del hongo.
-     * @param jPanel panel enviado desde el paquete vista.
-     * @return boolean.
+     * @param nombre
+     * @param geolocalizacion
+     * @param descripcion
+     * @param categorias
+     * @param imagen
+     * @param jPanel
+     * @return
      */
     public static boolean crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen, JPanel jPanel) {
         if(nombre.isEmpty () || geolocalizacion.isEmpty () || descripcion.isEmpty ()){
@@ -67,13 +66,6 @@ public class ComunicaHongoConDatos {
             return false;
         }
     }
-
-    /**
-     * Método público que retorna la lista de hongos especificada
-     * en BuscarHongoPorNombre en el paquete datos.
-     * @param busqueda cadena enviada por el paquete vista.
-     * @return ArrayList<Hongo>.
-     */
 
     public static ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {
         return manejaDatosHongo.handleBuscarHongoPorNombre(busqueda);

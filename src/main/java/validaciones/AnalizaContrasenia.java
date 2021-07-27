@@ -1,26 +1,21 @@
 package validaciones;
-
 /**
- * @Autores: Proyecto FungiAraucania
- * @Descripción: Constructor de la clase ManejaDatosHongo.
+ * @author Proyecto FungiAraucania
+ * Constructor de la clase ManejaDatosHongo.
  * Realiza conexión con la base de datos del proyecto.
  * No requiere parámetros.
  **/
-
 public class AnalizaContrasenia {
-
     /**
      * @param mensajePar atributo que se envía desde el paquete modelo
      * para limpiar el mensaje una vez devuelve la seguridad de la
      * contraseña.
      */
-
     public static void setMensaje(String mensajePar) {
         mensaje = mensajePar;
     }
 
     private static String mensaje = " ";
-
     /**
      * Método público que retorna que tan segura es una contrasenia.
      * @param contrasenia contraseña enviada por la clase
@@ -42,7 +37,6 @@ public class AnalizaContrasenia {
         }
         return "Contraseña segura";
     }
-
     /**
      * Método privado que verifica si la clave tiene o no un largo de al menos
      * 8 caracteres.
@@ -55,12 +49,10 @@ public class AnalizaContrasenia {
         }
         return false;
     }
-
     /**
      * Método privado que verifica si la clave tiene o no: dígitos, mayúsculas y minúsculas.
      * @return boolean.
      */
-
     private static boolean verificarContraseniaRegular() {
         if (mensaje.contains("Faltan dígitos") || mensaje.contains("Faltan Mayúsculas") || mensaje.contains("Faltan Minúsculas")) {
             mensaje = "REGULAR: " + mensaje;
@@ -68,12 +60,10 @@ public class AnalizaContrasenia {
         }
         return false;
     }
-
     /**
      * Método privado que verifica si la clave tiene o no símbolos.
      * @return boolean.
      */
-
     private static boolean verificarContraseniaMedianamenteSegura(){
         if (mensaje.contains("Faltan símbolos")){
             mensaje = "MEDIANAMENTE SEGURA: " + mensaje;
@@ -81,13 +71,11 @@ public class AnalizaContrasenia {
         }
         return false;
     }
-
     /**
      * Método privado que calcula la cantidad de dígitos, minúsculas, mayúsculas y
      * símbolos que contiene el argumento enviado por el usuario, y revisa el largo del mismo.
      * @param contrasenia atributo analizado.
      */
-
     private static void agregarMensaje(String contrasenia) {
 
         int boolDigitos = 0;
@@ -105,7 +93,6 @@ public class AnalizaContrasenia {
         }
         mensaje = generarMensaje(boolDigitos, boolMinusculas, boolMayusculas, boolLargo, boolsimbolos);
     }
-
     /**
      * Método que convierte un booleano a entero.
      * @param bool booleano a convertir.
@@ -114,7 +101,6 @@ public class AnalizaContrasenia {
     private static int convertirBooleanAInt(boolean bool) {
         return bool ? 1 : 0;
     }
-
     /**
      * Método privado que genera un mensaje, dependiendo de si los atributos son 0 o no.
      * @param digitos entero con la cantidad de dígitos de la contraseña.
@@ -124,7 +110,6 @@ public class AnalizaContrasenia {
      * @param simbolos entero con la cantidad de símbolos de la contraseña.
      * @return String.
      */
-
     private static String generarMensaje(int digitos, int minusculas, int mayusculas, int largo, int simbolos) {
 
         if (digitos == 0) {
@@ -144,7 +129,6 @@ public class AnalizaContrasenia {
         }
         return mensaje.substring(0, mensaje.length()-1);
     }
-
     /**
      * Método que verifica si el caracter es o no un número.
      * @param contrasenia caracter a analizar.
@@ -154,7 +138,6 @@ public class AnalizaContrasenia {
 
         return Character.isDigit(contrasenia);
     }
-
     /**
      * Método que verifica si el caracter es o no una mayúscula.
      * @param contrasenia caracter a analizar.
@@ -167,7 +150,6 @@ public class AnalizaContrasenia {
         }
         return false;
     }
-
     /**
      * Método que verifica si el caracter es o no una minúscula.
      * @param contrasenia caracter a analizar.
@@ -180,7 +162,6 @@ public class AnalizaContrasenia {
         }
         return false;
     }
-
     /**
      * Método que verifica si el caracter es o no un símbolo.
      * @param contrasenia caracter a analizar.
@@ -190,7 +171,6 @@ public class AnalizaContrasenia {
 
         return !(Character.isAlphabetic(contrasenia) || Character.isDigit(contrasenia));
     }
-
     /**
      * Método que verifica si el largo es o no mayor a 8.
      * @param contrasenia caracter a analizar.

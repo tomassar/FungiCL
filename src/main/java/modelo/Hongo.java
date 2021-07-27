@@ -3,13 +3,11 @@ package modelo;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Objects;
-
 /**
- * Autores: Proyecto FungiAraucania
- * Clase Hongo
- */
+ * @author Proyecto FungiAraucania
+ * Clase que permite modelar el hongo
+ **/
 public class Hongo {
-
     private int id;
     private final String nombre;
     private final String geolocalizacion;
@@ -20,17 +18,17 @@ public class Hongo {
     private final byte[] imagen;
 
     /**
-     * Constructor para los hongos provenientes de la base de datos.
-     * (Ya tienen una id y fecha de creación asociada).
-     * @param id
-     * @param nombre
-     * @param geolocalizacion
-     * @param descripcion
-     * @param categorias
-     * @param estado
-     * @param fechaDeCreacion
-     * @param imagen
-     */
+     * @author Proyecto FungiAraucania
+     * Constructor para los hongos retirados de la base de datos (ya tenían una fecha de creación y una id).
+     * @param id id del hongo
+     * @param nombre nombre del hongo
+     * @param geolocalizacion geolocalizacion del hongo
+     * @param descripcion descripcion del hongo
+     * @param categorias categorias del hongo
+     * @param estado estado del hongo
+     * @param fechaDeCreacion fecha de creación del hongo
+     * @param imagen imagen del hongo
+     **/
     public Hongo(int id, String nombre, String geolocalizacion, String descripcion, ArrayList<TipoHongo> categorias, EstadoHongo estado, Date fechaDeCreacion, byte[] imagen) {
         this.id = id;
         this.nombre = nombre;
@@ -43,16 +41,15 @@ public class Hongo {
     }
 
     /**
-     * Constructor para los hongos a crear. Tanto la id como la fecha de creación
-     * son asignadas automáticamente. La id por defecto es -1, pero la base
-     * de datos se encarga de darle una id final.
-     * @param nombre
-     * @param geolocalizacion
-     * @param descripcion
-     * @param categorias
-     * @param estado
-     * @param imagen
-     */
+     * @author Proyecto FungiAraucania
+     * Constructor para los hongos a crear (la id es asignada automáticamente por la base de datos y la fecha también se asigna automáticamente en Java)
+     * @param nombre nombre del hongo
+     * @param geolocalizacion geolocalizacion del hongo
+     * @param descripcion descripcion del hongo
+     * @param categorias categorias del hongo
+     * @param estado estado del hongo
+     * @param imagen imagen del hongo
+     **/
     public Hongo(String nombre, String geolocalizacion, String descripcion, ArrayList<TipoHongo> categorias, EstadoHongo estado, byte[] imagen) {
         this.nombre = nombre;
         this.geolocalizacion = geolocalizacion;
@@ -65,77 +62,58 @@ public class Hongo {
     }
 
     /**
-     *
-     * @return
-     */
-
+     * @return id
+     **/
     public int getId() {
         return id;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return estado
+     **/
     public EstadoHongo getEstado() {
         return estado;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return nombre
+     **/
     public String getNombre() {
         return nombre;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return geolocalizacion
+     **/
     public String getGeolocalizacion() {
         return geolocalizacion;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return descripcion
+     **/
     public String getDescripcion() {
         return descripcion;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return fechaDeCreacion
+     **/
     public Date getFechaDeCreacion() {
         return fechaDeCreacion;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return categorias
+     **/
     public ArrayList<TipoHongo> getCategorias() {
         return categorias;
     }
-
     /**
-     *
-     * @return
-     */
-
+     * @return imagen
+     **/
     public byte[] getImagen() {
         return imagen;
     }
 
+    /**
+     * @param o: Object
+     * @return boolean
+     **/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,6 +122,9 @@ public class Hongo {
         return nombre.equals(hongo.getNombre ()) && geolocalizacion.equals(hongo.getGeolocalizacion ()) && descripcion.equals (hongo.getDescripcion ()) && categorias.equals (hongo.getCategorias ()) && imagen == hongo.getImagen ();
     }
 
+    /**
+     * @return int
+     **/
     @Override
     public int hashCode() {
         return Objects.hash(id);
