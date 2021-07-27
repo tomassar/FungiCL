@@ -1,10 +1,13 @@
 package datos;
 
+import modelo.ComunicaUsuarioConDatos;
 import modelo.Usuario;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +33,9 @@ public class TestManejaDatosUsuario {
     }
 
     @Test
-    @DisplayName("Test para verificar fallo al crear un usuario")
+    @DisplayName("Test para verificar fallo al crear un usuario con un id pre-determinado")
     void falloAlCrearUsuario() {
-        Usuario usuario = new Usuario("Genérico", "contrasenia", "generico@generico.com");
+        Usuario usuario = new Usuario(1, "Genérico", "contrasenia", "generico@generico.com", new Date (System.currentTimeMillis ()));
         assertFalse(manejo.handleCrear(usuario));
     }
 
@@ -45,19 +48,21 @@ public class TestManejaDatosUsuario {
     }
 
     @Test
-    @DisplayName("Test para verificar fallo al cargar usuarios desde la base de datos")
-    void falloAlCargarUsuarios() {
-        assertEquals(0, manejo.handleObtenerUsuarios().size());
-    }
-    @Test
-    @DisplayName("Test para verificar carga de usuarios exitosa")
-    void cargarUsuarios() {
-        assertEquals(0, manejo.handleObtenerUsuarios().size());
+    @DisplayName("Test para verificar fallo al iniciar sesión")
+    void falloAlBuscarHongos() {
+        assertEquals("Nombre de usuario o email no existe.",manejo.handleIniciarSesion("inexistente@generico.com", "contrasenia"));
     }
 
     @Test
-    @DisplayName("Test para verificar fallo al iniciar sesión")
-    void falloAlBuscarHongos() {
-        assertNull(manejo.handleIniciarSesion("inexistente@generico.com", "contrasenia"));
+    @DisplayName("Test para verificar fallo al iniciar sesión con un email inválido")
+    void falloAlIniciarSesionConEmailInvalido() {
+        assertEquals("Nombre de usuario o email no existe.",manejo.handleIniciarSesion("inexistente", "contrasenia"));
+    }
+
+    @Test
+    @DisplayName("Test para verificar fallo al crear cuenta con contraseñas que no coinciden")
+    void falloAlCrearCuentaConContraseñasQueNoCoinciden() {
+        String[] datos = {"Nombre", "contraseña", "correo@correo.com", "confirmacontraseña"};
+        assertEquals("<html><p style='color:red'>Las contraseñas no coinciden</p></html>",ComunicaUsuarioConDatos.crearCuenta (datos));
     }
 }

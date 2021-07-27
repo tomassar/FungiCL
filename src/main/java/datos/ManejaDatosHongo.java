@@ -63,6 +63,16 @@ public class ManejaDatosHongo {
     //Método que maneja excepciones de crear.
     public boolean handleCrear(Hongo hongo) {
         try {
+            if(hongo.getId () != -1){
+                return false;
+            }
+            ArrayList<Hongo> hongos = handleObtenerHongos ();
+            for (Hongo hongoBaseDeDatos:
+                 hongos) {
+                if(hongoBaseDeDatos.equals (hongo)){
+                    return false;
+                }
+            }
             crear(hongo);
             return true;
         } catch (SQLException e) {

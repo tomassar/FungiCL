@@ -35,6 +35,7 @@ public class Hongo {
         this.categorias = categorias;
         this.fechaDeCreacion = new Date (System.currentTimeMillis ());
         this.imagen = imagen;
+        this.id = -1;
     }
 
     public int getId() {
@@ -74,7 +75,7 @@ public class Hongo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hongo hongo = (Hongo) o;
-        return id == hongo.id;
+        return nombre.equals(hongo.getNombre ()) && geolocalizacion.equals(hongo.getGeolocalizacion ()) && descripcion.equals (hongo.getDescripcion ()) && categorias.equals (hongo.getCategorias ()) && imagen == hongo.getImagen ();
     }
 
     @Override

@@ -49,6 +49,11 @@ public class ManejaDatosUsuario {
 
     public boolean handleCrear(Usuario usuario) {
         try {
+            if(usuario.getId() != -1){
+                //si no es igual a -1, significa que el id viene ya viene puesto, lo cual no puede suceder, porque el id
+                //es autogenerado por la base de datos.
+                return false;
+            }
             crear(usuario);
             return true;
         } catch (SQLException e) {

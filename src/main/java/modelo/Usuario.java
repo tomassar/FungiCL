@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Date;
 
 public class Usuario {
+
     private int id;
     private final String nombre;
     private final String contrasena;
@@ -15,6 +16,7 @@ public class Usuario {
         this.contrasena = contrasena;
         this.correo = correo;
         this.fechaDeCreacion = new Date (System.currentTimeMillis());
+        this.id = -1;
     }
 
     //Constructor para aquellos usuarios que provienen de la base de datos y que tienen un id y una fecha de creación ya asignados.
@@ -39,5 +41,8 @@ public class Usuario {
 
     public String getCorreo() {
         return correo;
+    }
+    public int getId() {
+        return id;
     }
 }
