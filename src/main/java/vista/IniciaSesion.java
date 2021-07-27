@@ -53,7 +53,7 @@ public class IniciaSesion extends JFrame implements ActionListener {
 
         });
         registrarseButton.addActionListener (e -> {
-            CreaCuenta ventanaCrearCuenta = new CreaCuenta(this, true);
+            CreaCuenta ventanaCrearCuenta = new CreaCuenta (this, true);
             ventanaCrearCuenta.setVisible (true);
         });
     }

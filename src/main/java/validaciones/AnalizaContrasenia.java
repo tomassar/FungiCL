@@ -2,8 +2,8 @@ package validaciones;
 
 public class AnalizaContrasenia {
 
-    public static String getMensaje() {
-        return mensaje;
+    public static void setMensaje(String mensajePar) {
+        mensaje = mensajePar;
     }
 
     private static String mensaje = " ";

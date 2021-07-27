@@ -29,10 +29,28 @@ public class ComunicaUsuarioConDatos {
                 return "<html><p style='color:red'>El email no parece ser correcto</p></html>";
             }
         }
-        if(manejoDatosUsuario.handleCrear (usuario)){
-            return "<html><p style='color:blue'>Usuario creado con éxito</p></html>";
-        }else{
-            return "<html><p style='color:red'>Nombre de usuario o correo ya existente</p></html>";
+        String mensajeContrasena = AnalizaContrasenia.verificarContrasenia (datos[1]);
+        AnalizaContrasenia.setMensaje (" ");
+        System.out.println (mensajeContrasena);
+        if(mensajeContrasena.contains("INSEGURA")){
+            mensajeContrasena = "Contraseña insegura";
         }
+        if(mensajeContrasena.contains ("REGULAR")){
+            mensajeContrasena = "Contraseña regular";
+        }
+        if(mensajeContrasena.contains ("MEDIANAMENTE SEGURA")){
+            mensajeContrasena = "Contraseña medianamente segura";
+        }
+        if(mensajeContrasena.equals("Contraseña segura")){
+            if(manejoDatosUsuario.handleCrear (usuario)){
+                return "<html><p style='color:blue;'>Usuario creado con éxito</p></html>";
+            }else{
+                return "<html><p style='color:red'>Nombre de usuario o correo ya existente</p></html>";
+            }
+        }else{
+            return "<html><p style='color:red'>"+mensajeContrasena+"</p></html>";
+        }
+
+
     }
 }
