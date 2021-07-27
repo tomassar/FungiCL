@@ -15,17 +15,18 @@ public class ComunicaHongoConDatos {
         return manejaDatosHongo.handleObtenerHongos ();
     }
 
-    public static void crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen) {
+    public static boolean crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen) {
 
         //convertir el File imágen a un arreglo de bytes
         // Se crea un array de bytes del tamaño del archivo
-        byte[] fileBytes;
+        byte[] fileBytes = null;
         try {
             //rediomensiona la imágen a un tamaño adecuado
-            fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath ());
+            if(imagen != null){
+                fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath ());
+            }
         } catch (IOException e) {
-            fileBytes = null;
-            e.printStackTrace ();
+            System.err.println ("Error: "+e);
         }
 
         //Convertir categorias String a TipoHongo
@@ -34,7 +35,8 @@ public class ComunicaHongoConDatos {
              categorias) {
             categoriasEnumeration.add(TipoHongo.valueOf (categoria));
         }
-            manejaDatosHongo.handleCrear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes));
+        return manejaDatosHongo.handleCrear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes));
+
     }
 
     public static ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {
