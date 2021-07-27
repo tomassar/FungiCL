@@ -7,8 +7,12 @@ import java.util.ArrayList;
 public class ComunicaUsuarioConDatos {
     private static ManejaDatosUsuario manejoDatosUsuario = new ManejaDatosUsuario();
 
-    public static Usuario inicarSesion(String nombreDeUsuarioText, String contrasenaTexto) {
-        return manejoDatosUsuario.handleIniciarSesion(nombreDeUsuarioText, contrasenaTexto);
+    public static String inicarSesion(String nombreDeUsuarioText, String contrasenaTexto) {
+        if(nombreDeUsuarioText.isEmpty () || contrasenaTexto.isEmpty ()){
+            return "Llene los campos vacíos.";
+        }
+        String msje = manejoDatosUsuario.handleIniciarSesion(nombreDeUsuarioText, contrasenaTexto);
+        return msje;
     }
 
     public static String crearCuenta(String[] datos){

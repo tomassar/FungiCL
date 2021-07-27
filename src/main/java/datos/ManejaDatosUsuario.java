@@ -83,7 +83,7 @@ public class ManejaDatosUsuario {
         return usuarios;
     }
 
-    private Usuario iniciarUsuario(ResultSet resultSet, String contrasena) throws SQLException {
+    private String iniciarUsuario(ResultSet resultSet, String contrasena) throws SQLException {
 
         String correo = resultSet.getString("correo");
         String hashedContrasena = resultSet.getString ("contrasena");
@@ -91,14 +91,14 @@ public class ManejaDatosUsuario {
         int id = Integer.parseInt(resultSet.getString("id"));
         boolean verificado = Password.check(contrasena, hashedContrasena).withBCrypt ();
         if(verificado){
-            return new Usuario(id, nombreDeUsuario, contrasena, correo);
+            return "";
         }else{
-            return null;
+            return "Contraseña incorrecta";
         }
 
     }
 
-    private Usuario iniciarSesion(String correoONombreDeUsuario, String contrasena) throws SQLException {
+    private String iniciarSesion(String correoONombreDeUsuario, String contrasena) throws SQLException {
 
         String sql = "SELECT * FROM usuarios WHERE (correo = ? OR nombredeusuario = ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -108,17 +108,17 @@ public class ManejaDatosUsuario {
         if (resultSet.next()) {
             return iniciarUsuario(resultSet, contrasena);
         } else {
-            System.out.println("El usuario no se encuentra en nuestra base de datos");
-            return null;
+            return "Nombre de usuario o email no existe.";
         }
     }
 
-    public Usuario handleIniciarSesion(String correoONombreDeUsuario, String contrasena) {
+    public String handleIniciarSesion(String correoONombreDeUsuario, String contrasena) {
         try {
-            return iniciarSesion(correoONombreDeUsuario, contrasena);
+            String msje = iniciarSesion(correoONombreDeUsuario, contrasena);
+            return msje;
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
-            return null;
+            return "Que es esto";
         }
     }
 }

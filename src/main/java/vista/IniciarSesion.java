@@ -16,7 +16,6 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JTextField textoContraseña;
     private JButton iniciarSesiónButton;
     private JLabel errorLabel;
-    static Usuario usuario;
 
     public IniciarSesion() {
 
@@ -40,9 +39,10 @@ public class IniciarSesion extends JFrame implements ActionListener {
                 String contrasenaTexto = textoContraseña.getText ();
                 String nombreDeUsuarioText = textoUsuario.getText ();
 
-                usuario = ComunicaUsuarioConDatos.inicarSesion (nombreDeUsuarioText, contrasenaTexto);
-                if (usuario == null) {
-                    errorLabel.setText ("Nombre de usuario o contraseña incorrecta.");
+                String mensaje = ComunicaUsuarioConDatos.inicarSesion (nombreDeUsuarioText, contrasenaTexto);
+                if (!mensaje.equals ("")) {
+                    errorLabel.setText (mensaje);
+                    Utilidades.setTimeout (() -> errorLabel.setText (""), 5000);
                 } else {
                     Menu menu = new Menu (parent, true);
                     menu.setVisible (true);

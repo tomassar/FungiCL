@@ -16,11 +16,7 @@ public class ComunicaHongoConDatos {
         return manejaDatosHongo.handleObtenerHongos ();
     }
 
-    //public static void crearHongo(String nombre, String geolocalizacion, String descripcion, String categorias) {
-     //   manejaDatosHongo.handleCrear(new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR));
-    //}
-
-    public static void crearHongoConImagen(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen) {
+    public static void crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen) {
 
         //convertir el File imágen a un arreglo de bytes
         // Se crea un array de bytes del tamaño del archivo

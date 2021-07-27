@@ -66,7 +66,7 @@ public class AgregaHongo extends JDialog {
                 if (alucinógenoCheckBox.isSelected ()) {
                     categorias.add ("ALUCINOGENO");
                 }
-                ComunicaHongoConDatos.crearHongoConImagen (nombre, geolocalizacion, descripcion, categorias, imagen);
+                ComunicaHongoConDatos.crearHongo (nombre, geolocalizacion, descripcion, categorias, imagen);
             }
         });
         elegirImágenButton.addActionListener (new ActionListener () {
