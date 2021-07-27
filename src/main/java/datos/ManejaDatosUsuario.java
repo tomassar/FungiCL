@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import com.password4j.Hash;
 import com.password4j.Password;
 import modelo.*;
-import validaciones.ValidaDatosUsuario;
-
-import javax.xml.transform.Result;
 
 public class ManejaDatosUsuario {
     //Conexión con la base de datos de MySQL, específicamente al esquema fungiaraucania
@@ -17,13 +14,16 @@ public class ManejaDatosUsuario {
     private static Statement statement;
 
     public ManejaDatosUsuario() {
-        establecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
+        handleEstablecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
-    public static boolean establecerConexion(String baseDatos, String usuario, String puerto) {
+    private void establecerConexion(String baseDatos, String usuario, String puerto) throws SQLException {
+        connection = DriverManager.getConnection(baseDatos, usuario, puerto);
+        statement = connection.createStatement();
+    }
+    public boolean handleEstablecerConexion(String baseDatos, String usuario, String puerto) {
         try {
-            connection = DriverManager.getConnection(baseDatos, usuario, puerto);
-            statement = connection.createStatement();
+            establecerConexion(baseDatos, usuario, puerto);
             return true;
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -82,7 +82,6 @@ public class ManejaDatosUsuario {
         }
         return usuarios;
     }
-
     private String iniciarUsuario(ResultSet resultSet, String contrasena) throws SQLException {
 
         String correo = resultSet.getString("correo");

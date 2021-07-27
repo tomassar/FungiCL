@@ -18,6 +18,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JTextField textoContraseña;
     private JButton iniciarSesiónButton;
     private JLabel errorLabel;
+    static Usuario usuario;
 
     public IniciarSesion() {
 

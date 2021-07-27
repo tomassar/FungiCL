@@ -25,28 +25,39 @@ public class TestManejaDatosUsuario {
 
     @Test
     @DisplayName("Test para verificar conexiones fallidas")
-    void conexionFallida(){
-        assertFalse(ManejaDatosUsuario.establecerConexion(null, "root", "3306"));
+    void conexionFallida() {
+        assertFalse(manejo.handleEstablecerConexion(null, "root", "3306"));
     }
 
     @Test
     @DisplayName("Test para verificar fallo al crear un usuario")
-    void FalloAlCrearUsuario(){
-
+    void falloAlCrearUsuario() {
         Usuario usuario = new Usuario(1, "Genérico", "contrasenia", "generico@generico.com");
         assertFalse(manejo.handleCrear(usuario));
     }
 
     @Test
-    @DisplayName("Test para verificar fallo al cargar usuarios desde la base de datos")
-    void FalloAlCargarUsuarios(){
+    @DisplayName("Test para verificar creación de un usuario exitosa")
+    void crearUsuario() {
+            Usuario usuario = new Usuario("genérico", "contrasenia", "generico@generico.com");
+            String a= "genérico";
+            assertEquals(a, usuario.getNombre());
+    }
 
+    @Test
+    @DisplayName("Test para verificar fallo al cargar usuarios desde la base de datos")
+    void falloAlCargarUsuarios() {
+        assertEquals(0, manejo.handleObtenerUsuarios().size());
+    }
+    @Test
+    @DisplayName("Test para verificar carga de usuarios exitosa")
+    void cargarUsuarios() {
         assertEquals(0, manejo.handleObtenerUsuarios().size());
     }
 
     @Test
     @DisplayName("Test para verificar fallo al iniciar sesión")
-    void FalloAlBuscarHongos(){
+    void falloAlBuscarHongos() {
         assertNull(manejo.handleIniciarSesion("inexistente@generico.com", "contrasenia"));
     }
 }

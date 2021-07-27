@@ -11,14 +11,17 @@ public class ManejaDatosHongo {
     //Representa un SQL statement (en lenguaje SQL)
     private static Statement statement;
 
-    public ManejaDatosHongo(){
-        establecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
+    public ManejaDatosHongo() {
+        handleEstablecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
-    public boolean establecerConexion(String baseDatos, String usuario, String puerto){
+    private void establecerConexion(String baseDatos, String usuario, String puerto) throws SQLException {
+        connection = DriverManager.getConnection(baseDatos, usuario, puerto);
+        statement = connection.createStatement();
+    }
+    public boolean handleEstablecerConexion(String baseDatos, String usuario, String puerto) {
         try {
-            connection = DriverManager.getConnection(baseDatos, usuario, puerto);
-            statement = connection.createStatement();
+            establecerConexion(baseDatos, usuario, puerto);
             return true;
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
