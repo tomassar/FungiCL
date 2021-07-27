@@ -1,36 +1,36 @@
 package modelo;
 
 import datos.ManejaDatosHongo;
-import datos.ManejaDatosUsuario;
+import utilidades.Utilidades;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ComunicaHongoConDatos {
 
-    private static ManejaDatosHongo manejaDatosHongo = new ManejaDatosHongo();
+    private static final ManejaDatosHongo manejaDatosHongo = new ManejaDatosHongo();
 
     public static ArrayList<Hongo> obtenerHongos(){
         return manejaDatosHongo.handleObtenerHongos ();
     }
 
-    //public static void crearHongo(String nombre, String geolocalizacion, String descripcion, String categorias) {
-     //   manejaDatosHongo.handleCrear(new Hongo (nombre, geolocalizacion, descripcion, categorias, EstadoHongo.POR_CONFIRMAR));
-    //}
-
-    public static void crearHongoConImagen(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen) {
-
+    public static boolean crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen, JPanel jPanel) {
+        if(nombre.isEmpty () || geolocalizacion.isEmpty () || descripcion.isEmpty ()){
+            JOptionPane.showMessageDialog (jPanel, "Llene los campos faltantes");
+            return false;
+        }
         //convertir el File imágen a un arreglo de bytes
         // Se crea un array de bytes del tamaño del archivo
-        byte[] fileBytes;
+        byte[] fileBytes = null;
         try {
             //rediomensiona la imágen a un tamaño adecuado
-            fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath ());
+            if(imagen != null){
+                fileBytes = Utilidades.redimensionar (imagen.getAbsolutePath ());
+            }
         } catch (IOException e) {
-            fileBytes = null;
-            e.printStackTrace ();
+            System.err.println ("Error: "+e);
         }
 
         //Convertir categorias String a TipoHongo
@@ -39,7 +39,13 @@ public class ComunicaHongoConDatos {
              categorias) {
             categoriasEnumeration.add(TipoHongo.valueOf (categoria));
         }
-            manejaDatosHongo.handleCrear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes));
+        if(manejaDatosHongo.handleCrear (new Hongo (nombre, geolocalizacion, descripcion, categoriasEnumeration, EstadoHongo.POR_CONFIRMAR, fileBytes))){
+            JOptionPane.showMessageDialog (jPanel, "Hongo agregado con éxito.");
+            return true;
+        }else{
+            JOptionPane.showMessageDialog (jPanel, "Hongo ya existente en la base de datos.");
+            return false;
+        }
     }
 
     public static ArrayList<Hongo> buscarHongosQueContengan(String busqueda) {

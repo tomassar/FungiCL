@@ -3,9 +3,9 @@ package datos;
 import java.sql.*;
 import java.util.ArrayList;
 
+import com.password4j.Hash;
+import com.password4j.Password;
 import modelo.*;
-
-import javax.xml.transform.Result;
 
 public class ManejaDatosUsuario {
     //Conexión con la base de datos de MySQL, específicamente al esquema fungiaraucania
@@ -31,7 +31,6 @@ public class ManejaDatosUsuario {
         }
     }
 
-
     //Método que escribe un nuevo usuario en la base de datos
     private void crear(Usuario usuario) throws SQLException {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
@@ -39,13 +38,22 @@ public class ManejaDatosUsuario {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setNString(1, usuario.getNombre());
         preparedStatement.setNString(2, usuario.getCorreo());
-        preparedStatement.setNString(3, usuario.getClave());
+        String clave = usuario.getClave ();
+        //Hashear la contraseña
+        Hash hash = Password.hash(clave).addPepper ().withBCrypt ();
+        clave = hash.getResult ();
+        preparedStatement.setNString(3, clave);
         preparedStatement.setDate(4, usuario.getFechaDeCreacion());
         preparedStatement.executeUpdate();
     }
 
     public boolean handleCrear(Usuario usuario) {
         try {
+            if(usuario.getId() != -1){
+                //si no es igual a -1, significa que el id viene ya viene puesto, lo cual no puede suceder, porque el id
+                //es autogenerado por la base de datos.
+                return false;
+            }
             crear(usuario);
             return true;
         } catch (SQLException e) {
@@ -79,39 +87,39 @@ public class ManejaDatosUsuario {
         }
         return usuarios;
     }
+    private String iniciarUsuario(ResultSet resultSet, String contrasena) throws SQLException {
 
-
-    private Usuario iniciarUsuario(ResultSet resultSet, String contrasena, String correoONombreDeUsuario) throws SQLException {
-
-        String correo = resultSet.getString("correo");
+        String hashedContrasena = resultSet.getString ("contrasena");
         String nombreDeUsuario = resultSet.getString("nombredeusuario");
-        int id = Integer.parseInt(resultSet.getString("id"));
+        boolean verificado = Password.check(contrasena, hashedContrasena).withBCrypt ();
+        if(verificado){
+            return nombreDeUsuario;
+        }else{
+            return "Contraseña incorrecta";
+        }
 
-        return new Usuario(id, nombreDeUsuario, contrasena, correoONombreDeUsuario);
     }
 
-    private Usuario iniciarSesion(String correoONombreDeUsuario, String contrasena) throws SQLException {
+    private String iniciarSesion(String correoONombreDeUsuario, String contrasena) throws SQLException {
 
-        String sql = "SELECT * FROM usuarios WHERE (correo = ? OR nombredeusuario = ?) AND contrasena = ?;";
+        String sql = "SELECT * FROM usuarios WHERE (correo = ? OR nombredeusuario = ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setNString(1, correoONombreDeUsuario);
         preparedStatement.setNString(2, correoONombreDeUsuario);
-        preparedStatement.setNString(3, contrasena);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            return iniciarUsuario(resultSet, correoONombreDeUsuario, contrasena);
+            return iniciarUsuario(resultSet, contrasena);
         } else {
-            System.out.println("El usuario no se encuentra en nuestra base de datos");
-            return null;
+            return "Nombre de usuario o email no existe.";
         }
     }
 
-    public Usuario handleIniciarSesion(String correoONombreDeUsuario, String contrasena) {
+    public String handleIniciarSesion(String correoONombreDeUsuario, String contrasena) {
         try {
             return iniciarSesion(correoONombreDeUsuario, contrasena);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
-            return null;
+            return "Error";
         }
     }
 }

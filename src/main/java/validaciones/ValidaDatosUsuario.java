@@ -1,7 +1,5 @@
 package validaciones;
 
-import modelo.Usuario;
-
 public class ValidaDatosUsuario {
     public static boolean clavesCoinciden(String clave, String confirmacion){
         return clave.equals (confirmacion);

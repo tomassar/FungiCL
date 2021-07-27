@@ -1,7 +1,10 @@
 package datos;
 
+import jdk.jshell.execution.Util;
 import modelo.*;
+import utilidades.Utilidades;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -30,7 +33,7 @@ public class ManejaDatosHongo {
     }
 
     //Método que escribe un nuevo hongo en la base de datos
-    private void crear(Hongo hongo) throws SQLException {
+    public void crear(Hongo hongo) throws SQLException {
         //executeUpdate es para ejecutar comandos SQL que manipulan los datos de la base de datos, y no retornan nada.
         //PreparedStatement es para evitar SQL Injection.
         String sql = "INSERT INTO `fungiaraucania`.`hongos` (`nombre`,`geolocalizacion`,`descripcion`,`fechadecreacion`, `categorias`, `estado`, `imagen`) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -40,28 +43,33 @@ public class ManejaDatosHongo {
         preparedStatement.setNString(3, hongo.getDescripcion());
         preparedStatement.setDate(4, hongo.getFechaDeCreacion());
         // Las categorías se guardan separadas por un ; en la base de datos.
-        ArrayList<TipoHongo> categoriasArrList = hongo.getCategorias();
-        String categorias = "";
-        for (TipoHongo categoriaEnum :
-                categoriasArrList) {
-            categorias += categoriaEnum.toString() + ";";
-        }
-        categorias = categorias.substring(0, categorias.length() - 1);
+        ArrayList<TipoHongo> categoriasArrList = hongo.getCategorias ();
+        String categorias = Utilidades.crearCadenaCategoriasAPartirDeArrayList(categoriasArrList);
         preparedStatement.setNString(5, categorias);
         preparedStatement.setNString(6, hongo.getEstado().name());
-        byte[] bytesImagen = hongo.getImagen();
-        if (bytesImagen == null) {
+        byte[] bytesImagen = hongo.getImagen ();
+        if(bytesImagen == null){
             //En caso de que sea null, se sube un null
-            preparedStatement.setNull(7, Types.BLOB);
-        } else {
-            Blob blob = new javax.sql.rowset.serial.SerialBlob(hongo.getImagen()); // Creando el blob que almacena los bytes de la imágen
-            preparedStatement.setBlob(7, blob);
+            preparedStatement.setNull (7, Types.BLOB);
+        }else {
+            Blob blob = Utilidades.convertirBytesABlob(bytesImagen); // Creando el blob que almacena los bytes de la imágen
+            preparedStatement.setBlob (7, blob);
         }
         preparedStatement.executeUpdate();
     }
     //Método que maneja excepciones de crear.
     public boolean handleCrear(Hongo hongo) {
         try {
+            if(hongo.getId () != -1){
+                return false;
+            }
+            ArrayList<Hongo> hongos = handleObtenerHongos ();
+            for (Hongo hongoBaseDeDatos:
+                 hongos) {
+                if(hongoBaseDeDatos.equals (hongo)){
+                    return false;
+                }
+            }
             crear(hongo);
             return true;
         } catch (SQLException e) {
@@ -81,27 +89,14 @@ public class ManejaDatosHongo {
             Date fechaDeSubida = resultSet.getDate("fechadecreacion");
             EstadoHongo estado = EstadoHongo.valueOf(resultSet.getString("estado").toUpperCase());
             String categorias = resultSet.getString("categorias");
-            String[] arrCategorias = categorias.split(";");
-            ArrayList<TipoHongo> categoriasArrList = new ArrayList<>();
-            for (String categoria : arrCategorias) {
-                if (!categoria.equals("")) {
-                    categoriasArrList.add(TipoHongo.valueOf(categoria.toUpperCase()));
-                }
-            }
-            Blob blob = resultSet.getBlob("imagen");
-            //convertir blob a un arreglo de bytes
-            byte[] blobAsBytes = null;
-            if (blob != null) {
-                int blobLength = (int) blob.length();
-                blobAsBytes = blob.getBytes(1, blobLength);
-                //Liberar el blob para liberar memoria
-                blob.free();
-            } else {
-            }
+            ArrayList<TipoHongo> categoriasArrList = Utilidades.convertirStringArrListCategorias (categorias);
+            Blob blob = resultSet.getBlob ("imagen");
+            byte[] blobAsBytes = Utilidades.convertirBlobArregloBytes (blob);
             hongos1.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida, blobAsBytes));
         }
         return hongos1;
     }
+
     public ArrayList<Hongo> handleObtenerHongos() {
         ArrayList<Hongo> hongos1 = new ArrayList<>();
         try {
@@ -128,19 +123,19 @@ public class ManejaDatosHongo {
             Date fechaDeSubida = resultSet.getDate("fechadecreacion");
             EstadoHongo estado = EstadoHongo.valueOf(resultSet.getString("estado").toUpperCase());
             String categorias = resultSet.getString("categorias");
-            String[] arrCategorias = categorias.split(";");
-            ArrayList<TipoHongo> categoriasArrList = new ArrayList<>();
-            for (String categoria : arrCategorias) {
-                categoriasArrList.add(TipoHongo.valueOf(categoria.toUpperCase()));
+            String[] arrCategorias = categorias.split (";");
+            ArrayList<TipoHongo> categoriasArrList = new ArrayList<> ();
+            for (String categoria: arrCategorias) {
+                categoriasArrList.add(TipoHongo.valueOf(categoria.toUpperCase ()));
             }
-            Blob blob = resultSet.getBlob("imagen");
+            Blob blob = resultSet.getBlob ("imagen");
             //convertir blob a un arreglo de bytes
             int blobLength = (int) blob.length();
             byte[] blobAsBytes = blob.getBytes(1, blobLength);
             //Liberar el blob para liberar memoria
             blob.free();
 
-            hongos2.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida, blobAsBytes));
+            hongos2.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida,blobAsBytes));
         }
         return hongos2;
     }
@@ -153,8 +148,5 @@ public class ManejaDatosHongo {
         }
         return hongos2;
     }
-
-    /*---------------------------------------------------------------------------------------------------------------------------------
-     * Métodos auxiliares*/
 
 }

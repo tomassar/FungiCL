@@ -1,10 +1,13 @@
 package datos;
 
+import modelo.ComunicaUsuarioConDatos;
 import modelo.Usuario;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,46 +33,36 @@ public class TestManejaDatosUsuario {
     }
 
     @Test
-    @DisplayName("Test para verificar fallo al crear un usuario en la base de datos")
+    @DisplayName("Test para verificar fallo al crear un usuario con un id pre-determinado")
     void falloAlCrearUsuario() {
-        manejo.handleEstablecerConexion("baseDatosPrueba", "root", "3306");
-        Usuario usuario = new Usuario(1, "Genérico", "contrasenia", "generico@generico.com");
+        Usuario usuario = new Usuario(1, "Genérico", "contrasenia", "generico@generico.com", new Date (System.currentTimeMillis ()));
         assertFalse(manejo.handleCrear(usuario));
     }
 
     @Test
-    @DisplayName("Test para verificar creación de un usuario exitosa en la base de datos")
+    @DisplayName("Test para verificar creación de un usuario exitosa")
     void crearUsuario() {
-            manejo.handleEstablecerConexion("baseDatosPrueba1", "root", "3306");
             Usuario usuario = new Usuario("genérico", "contrasenia", "generico@generico.com");
-            assertTrue(manejo.handleCrear(usuario));
-    }
-
-    @Test
-    @DisplayName("Test para verificar fallo al cargar usuarios desde la base de datos")
-    void falloAlCargarUsuarios() {
-        manejo.handleEstablecerConexion("baseDatosPrueba", "root", "3306");
-        assertEquals(0, manejo.handleObtenerUsuarios().size());
-    }
-
-    @Test
-    @DisplayName("Test para verificar carga de usuarios exitosa")
-    void CargarUsuarios() {
-        manejo.handleEstablecerConexion("baseDatosPrueba1", "root", "3306");
-        assertEquals(1, manejo.handleObtenerUsuarios().size());
+            String a= "genérico";
+            assertEquals(a, usuario.getNombre());
     }
 
     @Test
     @DisplayName("Test para verificar fallo al iniciar sesión")
     void falloAlBuscarHongos() {
-        manejo.handleEstablecerConexion("baseDatosPrueba", "root", "3306");
-        assertNull(manejo.handleIniciarSesion("inexistente@generico.com", "contrasenia"));
+        assertEquals("Nombre de usuario o email no existe.",manejo.handleIniciarSesion("inexistente@generico.com", "contrasenia"));
     }
 
     @Test
-    @DisplayName("Test para verificar inicio de sesión exitosa")
-    void BuscarHongos() {
-        manejo.handleEstablecerConexion("baseDatosPrueba1", "root", "3306");
-        assertNull(manejo.handleIniciarSesion("generico@generico.com", "contrasenia"));
+    @DisplayName("Test para verificar fallo al iniciar sesión con un email inválido")
+    void falloAlIniciarSesionConEmailInvalido() {
+        assertEquals("Nombre de usuario o email no existe.",manejo.handleIniciarSesion("inexistente", "contrasenia"));
+    }
+
+    @Test
+    @DisplayName("Test para verificar fallo al crear cuenta con contraseñas que no coinciden")
+    void falloAlCrearCuentaConContraseñasQueNoCoinciden() {
+        String[] datos = {"Nombre", "contraseña", "correo@correo.com", "confirmacontraseña"};
+        assertEquals("<html><p style='color:red'>Las contraseñas no coinciden</p></html>",ComunicaUsuarioConDatos.crearCuenta (datos));
     }
 }
