@@ -1,33 +1,23 @@
 package modelo;
 
-import datos.ManejaDatosUsuario;
-
-import java.util.ArrayList;
 import java.sql.Date;
 
 public class Usuario {
     private int id;
-    private String nombre;
-    private String contrasena;
-    private String correo;
-    private Date fechaDeCreacion;
+    private final String nombre;
+    private final String contrasena;
+    private final String correo;
+    private final Date fechaDeCreacion;
 
-    public Usuario(int id, String nombre, String contrasena, String correo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.correo = correo;
-        this.fechaDeCreacion = new Date (System.currentTimeMillis());
-    }
-
+    //Constructor para aquellos usuarios que están siendo creados, y por tanto no tienen id ni fechaDeCreación (se crean automáticamente)
     public Usuario(String nombre, String contrasena, String correo) {
-        this.id = id;
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.correo = correo;
         this.fechaDeCreacion = new Date (System.currentTimeMillis());
     }
 
+    //Constructor para aquellos usuarios que provienen de la base de datos y que tienen un id y una fecha de creación ya asignados.
     public Usuario(int id, String nombre, String contrasena, String correo, Date fechaDeCreacion) {
         this.id = id;
         this.nombre = nombre;
@@ -38,9 +28,6 @@ public class Usuario {
 
     public String getClave() {
         return contrasena;
-    }
-    public int getId() {
-        return id;
     }
 
     public Date getFechaDeCreacion(){

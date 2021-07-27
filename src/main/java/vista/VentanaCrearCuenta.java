@@ -21,14 +21,12 @@ private JPasswordField contrasenaConfirmacion;
 private JTextField nombreDeUsuario;
 private JButton registrarseButton;
 private JButton volverButton;
-private JDialog thisObject;
 private JLabel labelAlerta;
 JFrame parent;
 
 public VentanaCrearCuenta(JFrame parent, boolean modal) {
     super (parent, modal);
     setTitle ("Crear cuenta");
-    this.thisObject = this;
     this.setSize (800, 600);
     this.setLocationRelativeTo (null);
     this.parent = parent;
@@ -43,24 +41,16 @@ public VentanaCrearCuenta(JFrame parent, boolean modal) {
         }
 
     });
-    volverButton.addActionListener (new ActionListener () {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            parent.setVisible (true);
-            thisObject.setVisible (false);
-        }
+    volverButton.addActionListener (e -> {
+        parent.setVisible (true);
+        this.setVisible (false);
     });
-    registrarseButton.addActionListener (new ActionListener () {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+    registrarseButton.addActionListener (e -> {
             String[] datos = {nombreDeUsuario.getText (), contrasena.getText (), email.getText (), contrasenaConfirmacion.getText ()};
             String resultadoCreacionCuenta = ComunicaUsuarioConDatos.crearCuenta (datos);
             labelAlerta.setText(resultadoCreacionCuenta);
-            Utilidades.setTimeout ( () -> {
-                labelAlerta.setText ("");
-            },5000);
+            Utilidades.setTimeout ( () -> labelAlerta.setText (""),5000);
 
-        }
     });
 }
 

@@ -18,7 +18,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JTextField textoContraseña;
     private JButton iniciarSesiónButton;
     private JLabel errorLabel;
-    static Usuario usuario;
+    private JLabel imagen;
 
     public IniciarSesion() {
 
@@ -33,33 +33,25 @@ public class IniciarSesion extends JFrame implements ActionListener {
         setDefaultCloseOperation (EXIT_ON_CLOSE);
         setVisible (true);
 
-        IniciarSesion parent = this;
 
+        iniciarSesiónButton.addActionListener (e -> {
+            String contrasenaTexto = textoContraseña.getText ();
+            String nombreDeUsuarioText = textoUsuario.getText ();
 
-        iniciarSesiónButton.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String contrasenaTexto = textoContraseña.getText ();
-                String nombreDeUsuarioText = textoUsuario.getText ();
-
-                String mensaje = ComunicaUsuarioConDatos.inicarSesion (nombreDeUsuarioText, contrasenaTexto);
-                if (mensaje.equals ("Llene los campos vacíos.") || mensaje.equals ("Contraseña incorrecta") || mensaje.equals ("Nombre de usuario o email no existe.")) {
-                    errorLabel.setText (mensaje);
-                    Utilidades.setTimeout (() -> errorLabel.setText (""), 5000);
-                } else {
-                    Menu menu = new Menu (parent, true, nombreDeUsuarioText);
-                    menu.setVisible (true);
-                    errorLabel.setText ("");
-                }
-
+            String mensaje = ComunicaUsuarioConDatos.inicarSesion (nombreDeUsuarioText, contrasenaTexto);
+            if (mensaje.equals ("Llene los campos vacíos.") || mensaje.equals ("Contraseña incorrecta") || mensaje.equals ("Nombre de usuario o email no existe.")) {
+                errorLabel.setText (mensaje);
+                Utilidades.setTimeout (() -> errorLabel.setText (""), 5000);
+            } else {
+                Menu menu = new Menu (this, true, nombreDeUsuarioText);
+                menu.setVisible (true);
+                errorLabel.setText ("");
             }
+
         });
-        registrarseButton.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaCrearCuenta ventanaCrearCuenta = new VentanaCrearCuenta (parent, true);
-                ventanaCrearCuenta.setVisible (true);
-            }
+        registrarseButton.addActionListener (e -> {
+            VentanaCrearCuenta ventanaCrearCuenta = new VentanaCrearCuenta (this, true);
+            ventanaCrearCuenta.setVisible (true);
         });
     }
 
@@ -136,11 +128,11 @@ public class IniciarSesion extends JFrame implements ActionListener {
         final JPanel panel3 = new JPanel ();
         panel3.setLayout (new com.intellij.uiDesigner.core.GridLayoutManager (1, 1, new Insets (0, 0, 0, 0), -1, -1));
         mainContainer.add (panel3, new com.intellij.uiDesigner.core.GridConstraints (0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label4 = new JLabel ();
-        label4.setIcon (new ImageIcon (getClass ().getResource ("/unnamed.png")));
-        label4.setOpaque (false);
-        label4.setText ("");
-        panel3.add (label4, new com.intellij.uiDesigner.core.GridConstraints (0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        imagen = new JLabel ();
+        imagen.setIcon (new ImageIcon (getClass ().getResource ("/unnamed.png")));
+        imagen.setOpaque (false);
+        imagen.setText ("");
+        panel3.add (imagen, new com.intellij.uiDesigner.core.GridConstraints (0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

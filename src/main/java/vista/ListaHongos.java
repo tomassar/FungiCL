@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ListaHongos {
@@ -29,7 +28,6 @@ public class ListaHongos {
 
         // Navegación de ventanas
         parent.setVisible (false);
-        ListaHongos listaHongo = this;
         jFrame.addWindowListener (new WindowAdapter () {
             public void windowClosing(WindowEvent e) {
                 jFrame.setVisible (false);
@@ -160,7 +158,7 @@ public class ListaHongos {
         JPanel jpFileContent = new JPanel();
         jpFileContent.add(jlFileContent);
         // Se usa HTML para que el párrafo pueda verse completo.
-        jlFileContent.setText("<html><p style='width:270px'>" + new String(descripcion) + "</p></html>");
+        jlFileContent.setText("<html><p style='width:270px'>" + descripcion + "</p></html>");
 
 
 
@@ -181,13 +179,13 @@ public class ListaHongos {
         jpCategorias.add(jlCategorias);
 
         if(categorias.size() != 0){
-            String strCategorias = "";
+            StringBuilder strCategorias = new StringBuilder ();
             for (TipoHongo tipoHongo:
                  categorias) {
-                strCategorias += tipoHongo.toString ()+", ";
+                strCategorias.append (tipoHongo.toString ()).append (", ");
             }
             //Para eliminar la última coma
-            strCategorias = strCategorias.substring (0, strCategorias.length () - 2);
+            strCategorias = new StringBuilder (strCategorias.substring (0, strCategorias.length () - 2));
             jlCategorias.setText ("<html><p style='width:270px'>Categorías: "+strCategorias+"</p></html>");
         }
 

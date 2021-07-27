@@ -84,10 +84,8 @@ public class ManejaDatosUsuario {
     }
     private String iniciarUsuario(ResultSet resultSet, String contrasena) throws SQLException {
 
-        String correo = resultSet.getString("correo");
         String hashedContrasena = resultSet.getString ("contrasena");
         String nombreDeUsuario = resultSet.getString("nombredeusuario");
-        int id = Integer.parseInt(resultSet.getString("id"));
         boolean verificado = Password.check(contrasena, hashedContrasena).withBCrypt ();
         if(verificado){
             return nombreDeUsuario;
@@ -113,8 +111,7 @@ public class ManejaDatosUsuario {
 
     public String handleIniciarSesion(String correoONombreDeUsuario, String contrasena) {
         try {
-            String msje = iniciarSesion(correoONombreDeUsuario, contrasena);
-            return msje;
+            return iniciarSesion(correoONombreDeUsuario, contrasena);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
             return "Error";

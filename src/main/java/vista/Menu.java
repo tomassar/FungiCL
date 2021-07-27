@@ -25,32 +25,25 @@ public class Menu extends JDialog {
         this.setPreferredSize (new Dimension (500, 500));
         this.setMaximumSize (new Dimension (500, 500));
         parent.setVisible (false);
+        this.setDefaultCloseOperation (HIDE_ON_CLOSE);
         saludo.setText ("Bienvenido, " + nombreDeUsuario);
         setTitle ("Menú");
         setLocationRelativeTo (null); // Se abre por default a la mitad de la pantalla.
         this.setContentPane (mainContainer);
         this.pack ();
-        Menu menu = this;
         this.addWindowListener (new WindowAdapter () {
             public void windowClosing(WindowEvent e) {
                 parent.setVisible (true);
-                menu.setVisible (false);
             }
 
         });
-        buscarHongosButton.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                BuscaHongo buscaHongos = new BuscaHongo (menu, true);
-                buscaHongos.setVisible (true);
-            }
+        buscarHongosButton.addActionListener (e -> {
+            BuscaHongo buscaHongos = new BuscaHongo (this, true);
+            buscaHongos.setVisible (true);
         });
-        agregarHongosButton.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AgregaHongo agregaHongo = new AgregaHongo (menu, true);
-                agregaHongo.setVisible (true);
-            }
+        agregarHongosButton.addActionListener (e -> {
+            AgregaHongo agregaHongo = new AgregaHongo (this, true);
+            agregaHongo.setVisible (true);
         });
     }
 

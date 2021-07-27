@@ -5,12 +5,11 @@ import utilidades.Utilidades;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ComunicaHongoConDatos {
 
-    private static ManejaDatosHongo manejaDatosHongo = new ManejaDatosHongo();
+    private static final ManejaDatosHongo manejaDatosHongo = new ManejaDatosHongo();
 
     public static ArrayList<Hongo> obtenerHongos(){
         return manejaDatosHongo.handleObtenerHongos ();

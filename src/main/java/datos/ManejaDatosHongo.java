@@ -97,7 +97,6 @@ public class ManejaDatosHongo {
                 blobAsBytes = blob.getBytes(1, blobLength);
                 //Liberar el blob para liberar memoria
                 blob.free();
-            }else{
             }
             hongos1.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida, blobAsBytes));
         }

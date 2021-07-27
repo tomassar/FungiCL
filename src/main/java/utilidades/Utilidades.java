@@ -44,7 +44,6 @@ public class Utilidades {
         //convertir outputimage a bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(outputImage, formatName, baos );
-        byte[] imageInByte = baos.toByteArray();
-        return imageInByte;
+        return baos.toByteArray();
     }
 }

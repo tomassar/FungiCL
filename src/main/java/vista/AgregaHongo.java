@@ -1,14 +1,11 @@
 package vista;
 
-import jdk.jfr.Category;
 import modelo.ComunicaHongoConDatos;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -20,7 +17,6 @@ public class AgregaHongo extends JDialog {
     private JTextField textNombre;
     private JTextField textGeo;
     private JTextField textDesc;
-    private JTextField textCategorias;
     private JButton agregarButton;
     private JButton elegirImágenButton;
     private JCheckBox venenosoCheckBox;
@@ -30,56 +26,49 @@ public class AgregaHongo extends JDialog {
     private File imagen = null; //imágen del hongo
 
     public AgregaHongo(Menu parent, boolean modal) {
-        super(parent, modal);
-        this.setMinimumSize(new Dimension(500, 500));
-        this.setPreferredSize(new Dimension(500, 500));
-        this.setMaximumSize(new Dimension(500, 500));
-        parent.setVisible(false);
-        setTitle("Agregar Hongo");
-        setLocationRelativeTo(null); // Se abre por default a la mitad de la pantalla.
-        this.setContentPane(panel1);
-        this.pack();
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
-        AgregaHongo thisClass = this;
-        this.addWindowListener(new WindowAdapter() {
+        super (parent, modal);
+        this.setMinimumSize (new Dimension (500, 500));
+        this.setPreferredSize (new Dimension (500, 500));
+        this.setMaximumSize (new Dimension (500, 500));
+        parent.setVisible (false);
+        setTitle ("Agregar Hongo");
+        setLocationRelativeTo (null); // Se abre por default a la mitad de la pantalla.
+        this.setContentPane (panel1);
+        this.pack ();
+        setDefaultCloseOperation (HIDE_ON_CLOSE);
+        this.addWindowListener (new WindowAdapter () {
             public void windowClosing(WindowEvent e) {
-                parent.setVisible(true);
+                parent.setVisible (true);
             }
 
         });
-        agregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombre = textNombre.getText();
-                String geolocalizacion = textGeo.getText();
-                String descripcion = textDesc.getText();
-                ArrayList<String> categorias = new ArrayList();
-                if (venenosoCheckBox.isSelected()) {
-                    categorias.add("VENENOSO");
-                }
-                if (comestibleCheckBox.isSelected()) {
-                    categorias.add("COMESTIBLE");
-                }
-                if (medicinalCheckBox.isSelected()) {
-                    categorias.add("MEDICINAL");
-                }
-                if (alucinógenoCheckBox.isSelected()) {
-                    categorias.add("ALUCINOGENO");
-                }
-                ComunicaHongoConDatos.crearHongoConImagen (nombre, geolocalizacion, descripcion, categorias, imagen);
+        agregarButton.addActionListener (e -> {
+            String nombre = textNombre.getText ();
+            String geolocalizacion = textGeo.getText ();
+            String descripcion = textDesc.getText ();
+            var categorias = new ArrayList ();
+            if (venenosoCheckBox.isSelected ()) {
+                categorias.add ("VENENOSO");
             }
+            if (comestibleCheckBox.isSelected ()) {
+                categorias.add ("COMESTIBLE");
+            }
+            if (medicinalCheckBox.isSelected ()) {
+                categorias.add ("MEDICINAL");
+            }
+            if (alucinógenoCheckBox.isSelected ()) {
+                categorias.add ("ALUCINOGENO");
+            }
+            ComunicaHongoConDatos.crearHongo (nombre, geolocalizacion, descripcion, categorias, imagen);
         });
-        elegirImágenButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Se crea la un JFileChooser para abrir el explorador de archivos
-                JFileChooser jFileChooser = new JFileChooser();
-                jFileChooser.setDialogTitle("Seleccione el archivo");
-                // Si se selecciona un archivo desde el JFileChooser se ejecuta la acción
-                if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    // Se obtiene el archivo seleccionado
-                    imagen = jFileChooser.getSelectedFile();
-                }
+        elegirImágenButton.addActionListener (e -> {
+            // Se crea la un JFileChooser para abrir el explorador de archivos
+            JFileChooser jFileChooser = new JFileChooser ();
+            jFileChooser.setDialogTitle ("Seleccione el archivo");
+            // Si se selecciona un archivo desde el JFileChooser se ejecuta la acción
+            if (jFileChooser.showOpenDialog (null) == JFileChooser.APPROVE_OPTION) {
+                // Se obtiene el archivo seleccionado
+                imagen = jFileChooser.getSelectedFile ();
             }
         });
     }
@@ -88,7 +77,7 @@ public class AgregaHongo extends JDialog {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
 // >>> IMPORTANT!! <<<
 // DO NOT EDIT OR ADD ANY CODE HERE!
-        $$$setupUI$$$();
+        $$$setupUI$$$ ();
     }
 
     /**

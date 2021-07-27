@@ -32,7 +32,7 @@ public class TestManejaDatosUsuario {
     @Test
     @DisplayName("Test para verificar fallo al crear un usuario")
     void falloAlCrearUsuario() {
-        Usuario usuario = new Usuario(1, "Genérico", "contrasenia", "generico@generico.com");
+        Usuario usuario = new Usuario("Genérico", "contrasenia", "generico@generico.com");
         assertFalse(manejo.handleCrear(usuario));
     }
 
