@@ -59,11 +59,7 @@ public class AgregaHongo extends JDialog {
             if (alucinógenoCheckBox.isSelected ()) {
                 categorias.add ("ALUCINOGENO");
             }
-            if (ComunicaHongoConDatos.crearHongo (nombre, geolocalizacion, descripcion, categorias, imagen)) {
-                JOptionPane.showMessageDialog (panel1, "Hongo satisfactoriamente creado");
-            } else {
-                JOptionPane.showMessageDialog (panel1, "El hongo ya existe en nuestra base de datos");
-            }
+            ComunicaHongoConDatos.crearHongo (nombre, geolocalizacion, descripcion, categorias, imagen, panel1);
         });
         elegirImágenButton.addActionListener (e -> {
             // Se crea la un JFileChooser para abrir el explorador de archivos

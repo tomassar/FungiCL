@@ -25,8 +25,17 @@ public class Utilidades {
         int width = inputImage.getWidth();
         int height = inputImage.getHeight();
         double radio_original = (double) height/ (double)width;
-        int scaledWidth = 240;
+        int scaledWidth = 220;
         int scaledHeight = (int)(radio_original* (double) scaledWidth); //Matemática para mantener el radio correcto de la imágen
+        System.out.println (scaledHeight);
+        System.out.println (scaledWidth);
+        if(scaledHeight>180){
+            //Si la altura es mucha, entonces se toma como punto de partida una altura de 300 y se desprende el ancho dado el radio original
+            scaledHeight = 180;
+            scaledWidth = (int) ((double) scaledHeight/radio_original);
+        }
+        System.out.println (scaledHeight);
+        System.out.println (scaledWidth);
         // Crea una imágen de salida
         BufferedImage outputImage = new BufferedImage(scaledWidth,
                 scaledHeight, inputImage.getType());

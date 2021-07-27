@@ -42,11 +42,13 @@ public class ManejaDatosHongo {
         // Las categorías se guardan separadas por un ; en la base de datos.
         ArrayList<TipoHongo> categoriasArrList = hongo.getCategorias ();
         String categorias = "";
-        for (TipoHongo categoriaEnum:
-             categoriasArrList) {
-            categorias += categoriaEnum.toString ()+";";
+        if(!categoriasArrList.isEmpty ()){
+            for (TipoHongo categoriaEnum:
+                    categoriasArrList) {
+                categorias += categoriaEnum.toString ()+";";
+            }
+            categorias = categorias.substring (0, categorias.length () - 1);
         }
-        categorias = categorias.substring (0, categorias.length () - 1);
         preparedStatement.setNString(5, categorias);
         preparedStatement.setNString(6, hongo.getEstado().name());
         byte[] bytesImagen = hongo.getImagen ();
