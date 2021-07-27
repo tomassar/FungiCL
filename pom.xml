@@ -17,6 +17,22 @@
                     <target>15</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <excludePackageNames>javax.swing.JFrame</excludePackageNames>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <excludePackageNames>javax.swing.JFrame</excludePackageNames>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>

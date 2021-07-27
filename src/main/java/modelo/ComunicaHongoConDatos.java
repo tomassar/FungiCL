@@ -8,14 +8,33 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Autores: Proyecto FungiAraucania
+ * Clase estática que comunica la clase Hongo con la clase ManejaDatosHongo.
+ * Favor de revisar el paquete datos y la clase Hongo del paquete modelo.
+ */
 public class ComunicaHongoConDatos {
 
     private static final ManejaDatosHongo manejaDatosHongo = new ManejaDatosHongo();
 
+    /**
+     * Método público que retorna la lista de hongos desde ManejoDatosHongo.
+     * @return
+     */
     public static ArrayList<Hongo> obtenerHongos(){
         return manejaDatosHongo.handleObtenerHongos ();
     }
 
+    /**
+     * Método que crea un hongo y muestra en pantalla si se ha podido o no crear.
+     * @param nombre
+     * @param geolocalizacion
+     * @param descripcion
+     * @param categorias
+     * @param imagen
+     * @param jPanel
+     * @return
+     */
     public static boolean crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen, JPanel jPanel) {
         if(nombre.isEmpty () || geolocalizacion.isEmpty () || descripcion.isEmpty ()){
             JOptionPane.showMessageDialog (jPanel, "Llene los campos faltantes");

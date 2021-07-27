@@ -1,5 +1,22 @@
 package modelo;
-
+/**
+ * Categorías de hongo
+ */
 public enum TipoHongo {
-    VENENOSO, COMESTIBLE, MEDICINAL, ALUCINOGENO
+    /**
+     * Hongo venenoso
+     */
+    VENENOSO,
+    /**
+     * Hongo comestible
+     */
+    COMESTIBLE,
+    /**
+     * Hongo MEDICINAL
+     */
+    MEDICINAL,
+    /**
+     * Hongo alucinogeno
+     */
+    ALUCINOGENO
 }
