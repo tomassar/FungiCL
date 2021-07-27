@@ -1,7 +1,10 @@
 package datos;
 
+import jdk.jshell.execution.Util;
 import modelo.*;
+import utilidades.Utilidades;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -41,14 +44,7 @@ public class ManejaDatosHongo {
         preparedStatement.setDate(4, hongo.getFechaDeCreacion());
         // Las categorías se guardan separadas por un ; en la base de datos.
         ArrayList<TipoHongo> categoriasArrList = hongo.getCategorias ();
-        String categorias = "";
-        if(!categoriasArrList.isEmpty ()){
-            for (TipoHongo categoriaEnum:
-                    categoriasArrList) {
-                categorias += categoriaEnum.toString ()+";";
-            }
-            categorias = categorias.substring (0, categorias.length () - 1);
-        }
+        String categorias = Utilidades.crearCadenaCategoriasAPartirDeArrayList(categoriasArrList);
         preparedStatement.setNString(5, categorias);
         preparedStatement.setNString(6, hongo.getEstado().name());
         byte[] bytesImagen = hongo.getImagen ();
@@ -56,12 +52,11 @@ public class ManejaDatosHongo {
             //En caso de que sea null, se sube un null
             preparedStatement.setNull (7, Types.BLOB);
         }else {
-            Blob blob = new javax.sql.rowset.serial.SerialBlob (hongo.getImagen ()); // Creando el blob que almacena los bytes de la imágen
+            Blob blob = Utilidades.convertirBytesABlob(bytesImagen); // Creando el blob que almacena los bytes de la imágen
             preparedStatement.setBlob (7, blob);
         }
         preparedStatement.executeUpdate();
     }
-
     //Método que maneja excepciones de crear.
     public boolean handleCrear(Hongo hongo) {
         try {
@@ -94,26 +89,14 @@ public class ManejaDatosHongo {
             Date fechaDeSubida = resultSet.getDate("fechadecreacion");
             EstadoHongo estado = EstadoHongo.valueOf(resultSet.getString("estado").toUpperCase());
             String categorias = resultSet.getString("categorias");
-            String[] arrCategorias = categorias.split (";");
-            ArrayList<TipoHongo> categoriasArrList = new ArrayList<> ();
-            for (String categoria: arrCategorias) {
-                if (!categoria.equals ("")) {
-                    categoriasArrList.add (TipoHongo.valueOf (categoria.toUpperCase ()));
-                }
-            }
+            ArrayList<TipoHongo> categoriasArrList = Utilidades.convertirStringArrListCategorias (categorias);
             Blob blob = resultSet.getBlob ("imagen");
-            //convertir blob a un arreglo de bytes
-            byte[] blobAsBytes = null;
-            if(blob != null){
-                int blobLength = (int) blob.length();
-                blobAsBytes = blob.getBytes(1, blobLength);
-                //Liberar el blob para liberar memoria
-                blob.free();
-            }
+            byte[] blobAsBytes = Utilidades.convertirBlobArregloBytes (blob);
             hongos1.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida, blobAsBytes));
         }
         return hongos1;
     }
+
     public ArrayList<Hongo> handleObtenerHongos() {
         ArrayList<Hongo> hongos1 = new ArrayList<>();
         try {
