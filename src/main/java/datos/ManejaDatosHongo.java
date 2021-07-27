@@ -8,30 +8,37 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @Autores: Proyecto FungiAraucania
+ * @Descripción: Constructor de la clase ManejaDatosHongo.
+ * Realiza conexión con la base de datos del proyecto.
+ * No requiere parámetros.
+ **/
+
 public class ManejaDatosHongo {
+
     //Conexión con la base de datos de MySQL, específicamente al esquema fungiaraucania
     private static Connection connection;
     //Representa un SQL statement (en lenguaje SQL)
     private static Statement statement;
 
     /**
-     * @Autores: Proyecto FungiAraucania
-     * @Descripción: Constructor de la clase ManejaDatosHongo.
-     * Realiza conexión con la base de datos del proyecto.
-     * No requiere parámetros.
-     **/
+     * Constructor de la clase, se conecta automáticamente con la base de datos.
+     */
+
     public ManejaDatosHongo() {
         handleEstablecerConexion("jdbc:mysql://localhost:3306/fungiaraucania", "root", "3306");
     }
 
     /**
      * Método privado que comunica la clase con la base de datos.
-     * @param baseDatos: String
-     * @param usuario: String
-     * @param puerto: String
-     * @throws SQLException: Error que ocurre cuando no se logra establecer la conexión.
-     * Favor de revisar la clase SQL.
+     * Favor de revisar la clase SQL de Java.
+     * @param baseDatos String con la ubicación de la base de datos de la base de datos.
+     * @param usuario String con el nombre del usuario.
+     * @param puerto String con el puerto que utiliza la base de datos.
+     * @throws SQLException
      **/
+
     private void establecerConexion(String baseDatos, String usuario, String puerto) throws SQLException {
         connection = DriverManager.getConnection(baseDatos, usuario, puerto);
         statement = connection.createStatement();
@@ -39,9 +46,9 @@ public class ManejaDatosHongo {
 
     /**
      * Método publico utilizado para realizar la conexión con la base de datos.
-     * @param baseDatos
-     * @param usuario
-     * @param puerto
+     * @param baseDatos String con la ubicación de la base de datos de la base de datos.
+     * @param usuario String con el nombre del usuario.
+     * @param puerto String con el puerto que utiliza la base de datos.
      * @return: boolean.
      **/
 
@@ -57,7 +64,7 @@ public class ManejaDatosHongo {
 
     /**
      * Método privado que escribe un nuevo hongo en la base de datos.
-     * @param hongo: Objeto de tipo Hongo. Revisar documentación de Hongo.
+     * @param hongo Objeto de tipo Hongo. Revisar documentación de Hongo en modelo.
      * @throws SQLException
      **/
 
@@ -90,8 +97,8 @@ public class ManejaDatosHongo {
      * Método público que se encarga de verificar que se haya creado el hongo,
      * utilizado en las pruebas unitarias del programa y para mostrar
      * mensaje en pantalla de que se ha creado un hongo.
-     * @param hongo
-     * @return: boolean
+     * @param hongo hongo enviado por la clase ComunicaHongoConDatos del paquete modelo.
+     * @return: boolean.
      **/
 
     public boolean handleCrear(Hongo hongo) {
@@ -115,10 +122,9 @@ public class ManejaDatosHongo {
     }
 
     /**
-     * Método privado para recuperar Hongos de la base de datos e instanciarlos
-     * después en el apartado vista para mostrarlo en pantalla. Favor
-     * de revisar el paquete vista.
-     * @return: ArrayList<Hongo>
+     * Método privado que utiliza ComunicaHongoConDatos
+     * para recuperar los hongos de la base de datos.
+     * @return ArrayList<Hongo>.
      * @throws SQLException
      **/
 
@@ -143,9 +149,8 @@ public class ManejaDatosHongo {
 
     /**
      * Método público para recuperar Hongos de la base de datos. Utilizado
-     * para las pruebas unitarias e instanciar los hongos en la vista.
-     * Favor revisar la vista.
-     * @return: ArrayList<Hongo>
+     * para las pruebas unitarias y la clase ComunicaHongoConDatos del paquete modelo.
+     * @return ArrayList<Hongo>.
      */
     public ArrayList<Hongo> handleObtenerHongos() {
         ArrayList<Hongo> hongos1 = new ArrayList<>();
@@ -159,9 +164,9 @@ public class ManejaDatosHongo {
 
     /**
      * Método privado que retorna una lista de Hongos que contengan
-     * la cadena indicada por el usuario. Favor revisar el paquete vista.
-     * @param busqueda: String
-     * @return: ArrayList<Hongo>
+     * la cadena indicada por el usuario. Favor revisar el paquete modelo.
+     * @param busqueda cadena enviada por la clase ComunicaHongoConDatos desde el paquete modelo.
+     * @return: ArrayList<Hongo>.
      * @throws SQLException
      **/
 
@@ -201,8 +206,8 @@ public class ManejaDatosHongo {
     /**
      * Método público que retorna una lista de Hongos que contengan
      * la cadena indicada por el usuario.
-     * @param busqueda
-     * @return: ArrayList<Hongo>
+     * @param busqueda cadena enviada por el paquete modelo.
+     * @return: ArrayList<Hongo>.
      */
     public ArrayList<Hongo> handleBuscarHongoPorNombre(String busqueda) {
         ArrayList<Hongo> hongos2 = new ArrayList<>();
