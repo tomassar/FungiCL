@@ -25,7 +25,8 @@ public class ListaHongos {
         jFrame.setLayout(new BoxLayout(jFrame.getContentPane(), BoxLayout.Y_AXIS));
         jFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         jFrame.setLocationRelativeTo(null);
-
+        //icono
+        jFrame.setIconImage (new ImageIcon (getClass ().getResource ("/icon.png")).getImage ());
         // Navegación de ventanas
         parent.setVisible (false);
         jFrame.addWindowListener (new WindowAdapter () {
@@ -130,6 +131,8 @@ public class ListaHongos {
         JFrame jFrame = new JFrame(nombre);
         jFrame.setSize(500, 500);
 
+        //icono
+        jFrame.setIconImage (new ImageIcon (ListaHongos.class.getResource ("/icon.png")).getImage ());
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
 
@@ -148,7 +151,12 @@ public class ListaHongos {
         jpImageContent.add(jlImageContent);
 
         // Para mostrar la imágen
-        jlImageContent.setIcon(new ImageIcon(imagen));
+        if(imagen != null){
+            jlImageContent.setIcon(new ImageIcon(imagen));
+        }else{
+            jlImageContent.setText ("No hay imágen disponible.");
+        }
+
 
 
         // Se crea un Label para mostrar la descripción del hongo

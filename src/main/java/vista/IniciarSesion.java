@@ -33,6 +33,9 @@ public class IniciarSesion extends JFrame implements ActionListener {
         setDefaultCloseOperation (EXIT_ON_CLOSE);
         setVisible (true);
 
+        //icono
+        //Image icon = Toolkit.getDefaultToolkit ().getImage ("/icon.png");
+        this.setIconImage (new ImageIcon (getClass ().getResource ("/icon.png")).getImage ());
 
         iniciarSesiónButton.addActionListener (e -> {
             String contrasenaTexto = textoContraseña.getText ();
