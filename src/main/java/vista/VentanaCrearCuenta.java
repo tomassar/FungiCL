@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
-import datos.*;
+
 import modelo.ComunicaUsuarioConDatos;
-import modelo.Utilidades;
+import utilidades.Utilidades;
 
 public class VentanaCrearCuenta extends JDialog implements ActionListener {
 private JPanel panel1;

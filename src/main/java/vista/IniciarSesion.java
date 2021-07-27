@@ -1,6 +1,8 @@
 package vista;
 
 import modelo.*;
+import utilidades.Utilidades;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
@@ -40,11 +42,11 @@ public class IniciarSesion extends JFrame implements ActionListener {
                 String nombreDeUsuarioText = textoUsuario.getText ();
 
                 String mensaje = ComunicaUsuarioConDatos.inicarSesion (nombreDeUsuarioText, contrasenaTexto);
-                if (!mensaje.equals ("")) {
+                if (mensaje.equals ("Llene los campos vacíos.") || mensaje.equals ("Contraseña incorrecta") || mensaje.equals ("Nombre de usuario o email no existe.")) {
                     errorLabel.setText (mensaje);
                     Utilidades.setTimeout (() -> errorLabel.setText (""), 5000);
                 } else {
-                    Menu menu = new Menu (parent, true);
+                    Menu menu = new Menu (parent, true, nombreDeUsuarioText);
                     menu.setVisible (true);
                     errorLabel.setText ("");
                 }

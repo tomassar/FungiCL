@@ -91,7 +91,7 @@ public class ManejaDatosUsuario {
         int id = Integer.parseInt(resultSet.getString("id"));
         boolean verificado = Password.check(contrasena, hashedContrasena).withBCrypt ();
         if(verificado){
-            return "";
+            return nombreDeUsuario;
         }else{
             return "Contraseña incorrecta";
         }
@@ -118,7 +118,7 @@ public class ManejaDatosUsuario {
             return msje;
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
-            return "Que es esto";
+            return "Error";
         }
     }
 }

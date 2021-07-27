@@ -1,4 +1,4 @@
-package modelo;
+package utilidades;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,8 +40,6 @@ public class Utilidades {
         String formatName = inputImagePath.substring(inputImagePath
                 .lastIndexOf(".") + 1);
 
-        // writes to output file
-        //ImageIO.write(outputImage, formatName, new File(outputImagePath));
 
         //convertir outputimage a bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

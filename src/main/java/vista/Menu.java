@@ -16,14 +16,16 @@ public class Menu extends JDialog {
     private JButton agregarHongosButton;
     private JButton buscarHongosButton;
     private JLabel textoCabecera;
+    private JLabel saludo;
 
-    public Menu(IniciarSesion parent, boolean modal) {
+    public Menu(IniciarSesion parent, boolean modal, String nombreDeUsuario) {
         // Tamaño de la ventana
         super (parent, modal);
         this.setMinimumSize (new Dimension (500, 500));
         this.setPreferredSize (new Dimension (500, 500));
         this.setMaximumSize (new Dimension (500, 500));
         parent.setVisible (false);
+        saludo.setText ("Bienvenido, " + nombreDeUsuario);
         setTitle ("Menú");
         setLocationRelativeTo (null); // Se abre por default a la mitad de la pantalla.
         this.setContentPane (mainContainer);
@@ -134,6 +136,9 @@ public class Menu extends JDialog {
         if (textoCabeceraFont != null) textoCabecera.setFont (textoCabeceraFont);
         textoCabecera.setText ("FungiAraucanía");
         inputPanel.add (textoCabecera, new com.intellij.uiDesigner.core.GridConstraints (1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        saludo = new JLabel ();
+        saludo.setText ("");
+        inputPanel.add (saludo, new com.intellij.uiDesigner.core.GridConstraints (0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

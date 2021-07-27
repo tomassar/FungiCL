@@ -1,7 +1,7 @@
 package modelo;
 
 import datos.ManejaDatosHongo;
-import datos.ManejaDatosUsuario;
+import utilidades.Utilidades;
 
 import java.io.File;
 import java.io.IOException;
