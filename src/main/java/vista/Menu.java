@@ -8,6 +8,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
 
+/**
+ * @author Proyecto FungiAraucania
+ * Clase que sirve para desplegar la lista de hongos en la base de datos.
+ **/
 public class Menu extends JDialog {
     private JPanel mainContainer;
     private JPanel inputPanel;
@@ -16,6 +20,14 @@ public class Menu extends JDialog {
     private JLabel textoCabecera;
     private JLabel saludo;
 
+    /**
+     * Método que crea un menú para que el usuario pueda tanto buscar hongos
+     * como ingresar hongos en la base de datos.
+     *
+     * @param parent          IniciaSesion.
+     * @param modal           valor que determina si se puede o no interactuar con la ventana padre.
+     * @param nombreDeUsuario Nombre del usuario que está en sesión.
+     */
     public Menu(IniciaSesion parent, boolean modal, String nombreDeUsuario) {
         // Tamaño de la ventana
         super (parent, modal);

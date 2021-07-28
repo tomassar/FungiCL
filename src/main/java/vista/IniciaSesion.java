@@ -11,6 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
+/**
+ * @author Proyecto FungiAraucania
+ * Clase que sirve para agregar un hongo en la base de datos.
+ **/
 public class IniciaSesion extends JFrame implements ActionListener {
     private JPanel mainContainer;
     private JButton registrarseButton;
@@ -20,6 +24,11 @@ public class IniciaSesion extends JFrame implements ActionListener {
     private JLabel errorLabel;
     private JLabel imagen;
 
+    /**
+     * Método que crea una venta para que un usuario registrado en la base de datos pueda ingresar al menu;
+     * así mismo, también sirve para darles la oportunidad de crear una cuenta nueva
+     * haciéndole clic al botón "registrarse".
+     */
     public IniciaSesion() {
 
         // Tamaño de la ventana
@@ -29,7 +38,7 @@ public class IniciaSesion extends JFrame implements ActionListener {
 
         setTitle ("Fungi Araucanía");
         setLocationRelativeTo (null); // Se abre por default a la mitad de la pantalla.
-        this.add (mainContainer);
+        add (mainContainer);
         setDefaultCloseOperation (EXIT_ON_CLOSE);
         setVisible (true);
 

@@ -10,6 +10,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
 
+/**
+ * @author Proyecto FungiAraucania
+ * Clase que sirve para agregar un hongo en la base de datos.
+ **/
 public class BuscaHongo extends JDialog {
 
     private JPanel mainContainer;
@@ -17,6 +21,13 @@ public class BuscaHongo extends JDialog {
     private JButton verListaCompletaButton;
     private JTextField textoBusqueda;
 
+    /**
+     * Método que muestra un campo de texto donde poder ingresar un hongo específico,
+     * pero que, también, posee un botón que conecta con ListaHongos.
+     *
+     * @param parent Menu.
+     * @param modal  valor que determina si se puede o no interactuar con la ventana padre.
+     */
     public BuscaHongo(Menu parent, boolean modal) {
         super (parent, modal);
         setTitle ("Búsqueda de ejemplares");

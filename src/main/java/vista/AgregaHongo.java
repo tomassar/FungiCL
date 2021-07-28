@@ -12,6 +12,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * @author Proyecto FungiAraucania
+ * Clase que sirve para agregar un hongo en la base de datos.
+ **/
 public class AgregaHongo extends JDialog {
     private JPanel panel1;
     private JTextField textNombre;
@@ -25,6 +29,15 @@ public class AgregaHongo extends JDialog {
     private JCheckBox alucinógenoCheckBox;
     private File imagen = null; //imágen del hongo
 
+    /**
+     * Método que crea una ventana con la cual el usuario puede agregar
+     * un hongo a la base de datos; para ello, llena los campos nombre,
+     * geolocalización y descripción, además de llenar las categorías en la
+     * Chechbox y seleccionar una imagen para el hongo.
+     *
+     * @param parent Menu.
+     * @param modal  valor que determina si se puede o no interactuar con la ventana padre.
+     */
     public AgregaHongo(Menu parent, boolean modal) {
         super (parent, modal);
         this.setMinimumSize (new Dimension (500, 500));
