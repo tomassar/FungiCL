@@ -119,7 +119,7 @@ public class Hongo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hongo hongo = (Hongo) o;
-        return nombre.equals(hongo.getNombre ()) && geolocalizacion.equals(hongo.getGeolocalizacion ()) && descripcion.equals (hongo.getDescripcion ()) && categorias.equals (hongo.getCategorias ()) && imagen == hongo.getImagen ();
+        return nombre.equals(hongo.getNombre ()) && geolocalizacion.equals(hongo.getGeolocalizacion ()) && descripcion.equals (hongo.getDescripcion ()) && categorias.equals (hongo.getCategorias ());
     }
 
     /**

@@ -178,11 +178,15 @@ public class ManejaDatosHongo {
                 categoriasArrList.add(TipoHongo.valueOf(categoria.toUpperCase ()));
             }
             Blob blob = resultSet.getBlob ("imagen");
-            //convertir blob a un arreglo de bytes
-            int blobLength = (int) blob.length();
-            byte[] blobAsBytes = blob.getBytes(1, blobLength);
-            //Liberar el blob para liberar memoria
-            blob.free();
+            System.out.println (blob);
+            byte[] blobAsBytes = null;
+            if(blob != null){
+                //convertir blob a un arreglo de bytes
+                int blobLength = (int) blob.length();
+                blobAsBytes = blob.getBytes(1, blobLength);
+                //Liberar el blob para liberar memoria
+                blob.free();
+            }
 
             hongos2.add(new Hongo(id, nombre, geolocalizacion, descripcion, categoriasArrList, estado, fechaDeSubida,blobAsBytes));
         }

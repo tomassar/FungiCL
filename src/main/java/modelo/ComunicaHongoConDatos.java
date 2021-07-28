@@ -27,12 +27,12 @@ public class ComunicaHongoConDatos {
 
     /**
      * Método que crea un hongo y muestra en pantalla si se ha podido o no crear.
-     * @param nombre
-     * @param geolocalizacion
-     * @param descripcion
-     * @param categorias
-     * @param imagen
-     * @param jPanel
+     * @param nombre nombre hongo
+     * @param geolocalizacion geolocalización hongo
+     * @param descripcion descripción del hongo
+     * @param categorias categorías del hongo (venenoso, comestible, alucinógeno y/o medicinal)
+     * @param imagen imágen del hongo (no es obligatorio, puede ser null)
+     * @param jPanel panel principal
      * @return
      */
     public static boolean crearHongo(String nombre, String geolocalizacion, String descripcion, ArrayList<String> categorias, File imagen, JPanel jPanel) {
