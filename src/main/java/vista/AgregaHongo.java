@@ -40,8 +40,8 @@ public class AgregaHongo extends JDialog {
      */
     public AgregaHongo(Menu parent, boolean modal) {
         super (parent, modal);
-        this.setMinimumSize (new Dimension (500, 500));
-        this.setPreferredSize (new Dimension (500, 500));
+        this.setMinimumSize (new Dimension (530, 530));
+        this.setPreferredSize (new Dimension (530, 530));
         this.setMaximumSize (new Dimension (500, 500));
         parent.setVisible (false);
         setTitle ("Agregar Hongo");
